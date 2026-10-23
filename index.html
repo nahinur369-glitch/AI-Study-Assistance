@@ -7,90 +7,48 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <style>
     :root[data-theme="dark"] {
-      --bg-main: #060c0a;
-      --bg-sidebar: #080f0c;
-      --bg-card: #0c1511;
-      --bg-card-hover: #101d18;
-      --bg-stat-inner: #0e1814;
-      --bg-input: #0a120f;
-      --bg-chip: #0c1511;
-      --bg-chip-active: #0c2b20;
-      --bg-nav-active: #0d3325;
-      --bg-icon-box: #0e2e22;
-      --bg-promo: #09130f;
-      --bg-modal-overlay: rgba(3, 8, 6, 0.82);
-      --border-divider: #14221c;
-      --border-card: #162820;
-      --border-accent: #00d68f;
-      --accent: #00d68f;
-      --accent-hover: #00eba0;
-      --text-primary: #f2f7f5;
-      --text-secondary: #8a9e95;
-      --text-muted: #687c73;
-      --btn-upgrade-bg: #0b1f17;
-      --btn-upgrade-text: #00d68f;
-      --btn-upgrade-border: #00d68f;
-      --send-icon-color: #05120d;
+      --bg-main: #060c0a; --bg-sidebar: #080f0c; --bg-card: #0c1511; --bg-card-hover: #101d18;
+      --bg-stat-inner: #0e1814; --bg-input: #0a120f; --bg-chip: #0c1511; --bg-chip-active: #0c2b20;
+      --bg-nav-active: #0d3325; --bg-icon-box: #0e2e22; --bg-promo: #09130f; --bg-modal-overlay: rgba(3, 8, 6, 0.82);
+      --border-divider: #14221c; --border-card: #162820; --border-accent: #00d68f; --accent: #00d68f;
+      --accent-hover: #00eba0; --text-primary: #f2f7f5; --text-secondary: #8a9e95; --text-muted: #687c73;
+      --btn-upgrade-bg: #0b1f17; --btn-upgrade-text: #00d68f; --btn-upgrade-border: #00d68f; --send-icon-color: #05120d;
       --hero-glow: radial-gradient(circle, rgba(0, 214, 143, 0.16) 0%, rgba(0, 214, 143, 0.04) 48%, transparent 72%);
     }
-
     :root[data-theme="light"] {
-      --bg-main: #eef4f1;
-      --bg-sidebar: #eaf0ed;
-      --bg-card: #f5f9f7;
-      --bg-card-hover: #ffffff;
-      --bg-stat-inner: #eef4f1;
-      --bg-input: #f7fbf9;
-      --bg-chip: #f2f6f4;
-      --bg-chip-active: #bceedc;
-      --bg-nav-active: #b7ecd8;
-      --bg-icon-box: #c1f0df;
-      --bg-promo: #e2f2eb;
-      --bg-modal-overlay: rgba(18, 34, 28, 0.55);
-      --border-divider: #d6e2dc;
-      --border-card: #d8e4de;
-      --border-accent: #00c482;
-      --accent: #00c482;
-      --accent-hover: #00ad73;
-      --text-primary: #1b2a24;
-      --text-secondary: #647a71;
-      --text-muted: #7c9188;
-      --btn-upgrade-bg: #00c482;
-      --btn-upgrade-text: #ffffff;
-      --btn-upgrade-border: #00c482;
-      --send-icon-color: #ffffff;
+      --bg-main: #eef4f1; --bg-sidebar: #eaf0ed; --bg-card: #f5f9f7; --bg-card-hover: #ffffff;
+      --bg-stat-inner: #eef4f1; --bg-input: #f7fbf9; --bg-chip: #f2f6f4; --bg-chip-active: #bceedc;
+      --bg-nav-active: #b7ecd8; --bg-icon-box: #c1f0df; --bg-promo: #e2f2eb; --bg-modal-overlay: rgba(18, 34, 28, 0.55);
+      --border-divider: #d6e2dc; --border-card: #d8e4de; --border-accent: #00c482; --accent: #00c482;
+      --accent-hover: #00ad73; --text-primary: #1b2a24; --text-secondary: #647a71; --text-muted: #7c9188;
+      --btn-upgrade-bg: #00c482; --btn-upgrade-text: #ffffff; --btn-upgrade-border: #00c482; --send-icon-color: #ffffff;
       --hero-glow: radial-gradient(circle, rgba(0, 196, 130, 0.18) 0%, rgba(0, 196, 130, 0.05) 50%, transparent 72%);
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; height: 100%; }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg-main);
-      color: var(--text-primary);
-      min-height: 100vh;
-      overflow-x: hidden;
+      background-color: var(--bg-main); color: var(--text-primary);
+      min-height: 100vh; min-height: 100dvh; overflow-x: hidden; overflow-y: auto;
       transition: background-color 0.25s ease, color 0.25s ease;
     }
-
-    .dashboard-shell { display: grid; grid-template-columns: 230px 1fr 280px; min-height: 100vh; width: 100%; }
+    .dashboard-shell { display: grid; grid-template-columns: 230px minmax(0, 1fr) 280px; min-height: 100vh; min-height: 100dvh; width: 100%; align-items: start; }
     .left-sidebar {
-      background-color: var(--bg-sidebar);
-      border-right: 1px solid var(--border-divider);
-      display: flex;
-      flex-direction: column;
-      padding: 20px 16px 18px;
-      user-select: none;
+      background-color: var(--bg-sidebar); border-right: 1px solid var(--border-divider);
+      display: flex; flex-direction: column; padding: 20px 16px 18px; user-select: none;
+      position: sticky; top: 0; height: 100vh; height: 100dvh; overflow-y: auto; z-index: 950;
     }
     .brand-header { display: flex; align-items: center; gap: 11px; padding: 2px 4px 22px; cursor: pointer; }
     .brand-logo-svg { width: 36px; height: 36px; flex-shrink: 0; }
     .brand-title { font-family: 'Cinzel', Georgia, serif; font-size: 18px; font-weight: 700; letter-spacing: 0.08em; color: var(--text-primary); }
     .nav-list { display: flex; flex-direction: column; gap: 4px; flex: 1; }
     .nav-item {
-      display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px;
-      border-radius: 10px; color: var(--text-secondary); font-size: 13.5px; font-weight: 500;
-      cursor: pointer; border: none; background: transparent; width: 100%; text-align: left; transition: all 0.18s ease;
+      display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: 10px;
+      color: var(--text-secondary); font-size: 13.5px; font-weight: 500; cursor: pointer;
+      border: none; background: transparent; width: 100%; text-align: left; transition: all 0.18s ease;
     }
     .nav-item:hover { background-color: var(--bg-card-hover); color: var(--text-primary); }
     .nav-item.active { background-color: var(--bg-nav-active); color: var(--accent); font-weight: 600; }
@@ -109,7 +67,10 @@
     }
     .btn-upgrade:hover { opacity: 0.92; transform: translateY(-1px); }
 
-    .center-main { padding: 26px 32px 24px; display: flex; flex-direction: column; justify-content: space-between; max-width: 980px; width: 100%; margin: 0 auto; }
+    .center-main {
+      padding: 26px 32px 36px; display: flex; flex-direction: column; justify-content: space-between;
+      gap: 24px; max-width: 980px; width: 100%; min-width: 0; min-height: 100vh; min-height: 100dvh; margin: 0 auto;
+    }
     .hero-section { display: flex; align-items: center; justify-content: space-between; gap: 20px; position: relative; padding: 6px 0 10px; }
     .hero-text-col { flex: 1; z-index: 2; }
     .greeting-eyebrow { font-size: 11.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
@@ -172,7 +133,11 @@
     .banner-left { display: flex; align-items: center; gap: 13px; }
     .banner-btn { width: auto; padding: 0 18px; flex-shrink: 0; }
 
-    .right-sidebar { background-color: var(--bg-sidebar); border-left: 1px solid var(--border-divider); padding: 18px 16px; display: flex; flex-direction: column; justify-content: space-between; gap: 12px; }
+    .right-sidebar {
+      background-color: var(--bg-sidebar); border-left: 1px solid var(--border-divider); padding: 18px 16px;
+      display: flex; flex-direction: column; justify-content: space-between; gap: 12px;
+      position: sticky; top: 0; min-height: 100vh; min-height: 100dvh; max-height: 100dvh; overflow-y: auto;
+    }
     .top-utility-bar { display: flex; align-items: center; justify-content: flex-end; gap: 14px; padding-bottom: 4px; }
     .icon-btn { background: transparent; border: none; color: var(--accent); cursor: pointer; position: relative; display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 8px; }
     .icon-btn:hover { background-color: var(--bg-card-hover); }
@@ -207,16 +172,66 @@
     .quote-text { font-size: 11.5px; font-style: italic; line-height: 1.45; color: var(--text-secondary); padding-left: 8px; }
     .quote-author { font-size: 11px; font-weight: 600; color: var(--accent); margin-top: 4px; padding-left: 8px; }
 
-    .modal-backdrop { position: fixed; inset: 0; background: var(--bg-modal-overlay); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 36px 16px 16px; }
+    .modal-backdrop { position: fixed; inset: 0; background: var(--bg-modal-overlay); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 1500; padding: 24px 16px; }
     .modal-backdrop.open { display: flex; }
-    .modal-box { background-color: var(--bg-card); border: 1px solid var(--border-accent); border-radius: 18px; width: 100%; max-width: 850px; max-height: 78vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6); }
-    .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid var(--border-divider); background-color: var(--bg-sidebar); }
+    .modal-box { background-color: var(--bg-card); border: 1px solid var(--border-accent); border-radius: 18px; width: 100%; max-width: 540px; max-height: 90vh; max-height: 90dvh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6); }
+
+    .modal-backdrop.fullscreen-workspace {
+      position: fixed; top: 0; right: 0; bottom: 0; left: 230px;
+      width: calc(100vw - 230px); height: 100vh; height: 100dvh; padding: 0;
+      background-color: var(--bg-main); backdrop-filter: none; z-index: 900; align-items: stretch; justify-content: stretch;
+    }
+    .modal-backdrop.fullscreen-workspace > .modal-box {
+      width: 100%; height: 100vh; height: 100dvh; max-width: none; max-height: none;
+      border-radius: 0; border: none; box-shadow: none; background-color: var(--bg-main);
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between; padding: 14px 24px;
+      border-bottom: 1px solid var(--border-divider); background-color: var(--bg-sidebar);
+      flex-shrink: 0; gap: 12px; flex-wrap: wrap;
+    }
     .modal-title { display: flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 700; color: var(--text-primary); }
     .model-badge { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 999px; background-color: var(--bg-icon-box); color: var(--accent); border: 1px solid var(--border-accent); }
     .btn-close-modal { background-color: var(--bg-icon-box); border: 1px solid var(--border-accent); color: var(--accent); font-size: 13px; font-weight: 700; cursor: pointer; padding: 6px 13px; border-radius: 999px; display: inline-flex; align-items: center; gap: 5px; transition: all 0.15s ease; }
     .btn-close-modal:hover { background-color: #ff5252; border-color: #ff5252; color: #ffffff; }
 
-    .chat-workspace-body { display: grid; grid-template-columns: 230px 1fr; flex: 1; min-height: 260px; max-height: 50vh; overflow: hidden; }
+    .chat-workspace-body { display: grid; grid-template-columns: 250px minmax(0, 1fr); flex: 1; min-height: 0; max-height: none; overflow: hidden; }
+    .workspace-main-col { display: flex; flex-direction: column; height: 100%; min-height: 0; min-width: 0; overflow: hidden; background-color: var(--bg-main); }
+    .workspace-tools-bar { display: flex; align-items: center; gap: 8px; padding: 10px 24px; border-bottom: 1px solid var(--border-divider); background-color: var(--bg-card); flex-shrink: 0; flex-wrap: wrap; }
+    .workspace-tool-pill { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 13px; border-radius: 999px; background-color: var(--bg-chip); border: 1px solid var(--border-card); color: var(--text-secondary); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.16s ease; }
+    .workspace-tool-pill:hover { border-color: var(--border-accent); color: var(--text-primary); }
+    .workspace-tool-pill.active { background-color: var(--bg-chip-active); border-color: var(--border-accent); color: var(--accent); }
+
+    .tools-scroll-container { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; padding: 24px 32px 36px; display: flex; flex-direction: column; gap: 20px; }
+    .tools-top-controls { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+    .tools-search-box { display: flex; align-items: center; gap: 10px; height: 44px; background-color: var(--bg-input); border: 1.5px solid var(--border-accent); border-radius: 999px; padding: 0 16px; flex: 1; min-width: 240px; max-width: 480px; }
+    .tools-search-box svg { width: 17px; height: 17px; color: var(--accent); flex-shrink: 0; }
+    .tools-search-input { flex: 1; border: none; outline: none; background: transparent; color: var(--text-primary); font-size: 13.5px; font-family: inherit; }
+    .tools-search-input::placeholder { color: var(--text-secondary); }
+    .tools-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+    .tool-dash-card { background-color: var(--bg-card); border: 1px solid var(--border-card); border-radius: 15px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; gap: 12px; min-height: 168px; cursor: pointer; text-align: left; transition: all 0.2s ease; position: relative; }
+    .tool-dash-card:hover { background-color: var(--bg-card-hover); border-color: var(--border-accent); transform: translateY(-2px); }
+    .tool-card-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 8px; border-radius: 999px; background-color: var(--bg-icon-box); color: var(--accent); align-self: flex-start; }
+    .tool-card-footer { display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; font-weight: 600; color: var(--accent); padding-top: 6px; border-top: 1px solid var(--border-divider); }
+
+    .tool-detail-shell { flex: 1; min-height: 0; overflow-y: auto; padding: 22px 28px 32px; display: flex; flex-direction: column; gap: 18px; }
+    .tool-detail-topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-bottom: 12px; border-bottom: 1px solid var(--border-divider); }
+    .tool-detail-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+    .tool-panel-card { background-color: var(--bg-card); border: 1px solid var(--border-card); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+    .tool-options-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+    .tool-select { height: 38px; border-radius: 10px; border: 1px solid var(--border-card); background-color: var(--bg-input); color: var(--text-primary); padding: 0 10px; font-size: 12.5px; font-family: inherit; outline: none; }
+    .tool-select:focus { border-color: var(--border-accent); }
+    .tool-textarea { width: 100%; min-height: 170px; border-radius: 12px; border: 1px solid var(--border-card); background-color: var(--bg-input); color: var(--text-primary); padding: 12px 14px; font-size: 13.5px; line-height: 1.55; font-family: inherit; resize: vertical; outline: none; }
+    .tool-textarea:focus { border-color: var(--border-accent); }
+    .pdf-dropzone { border: 1.5px dashed var(--border-accent); background-color: var(--bg-stat-inner); border-radius: 13px; padding: 16px; text-align: center; cursor: pointer; transition: background-color 0.18s ease; }
+    .pdf-dropzone:hover { background-color: var(--bg-card-hover); }
+    .tool-error-banner { display: none; background-color: rgba(255, 82, 82, 0.12); border: 1px solid #ff5252; color: #ff8a80; padding: 11px 14px; border-radius: 11px; font-size: 12.5px; line-height: 1.45; }
+    .tool-error-banner.show { display: block; }
+    .tool-loading-box { display: none; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 11px; background-color: var(--bg-nav-active); border: 1px solid var(--border-accent); color: var(--accent); font-size: 13px; font-weight: 600; }
+    .tool-loading-box.show { display: flex; }
+    .tool-result-box { min-height: 250px; max-height: 58vh; overflow-y: auto; background-color: var(--bg-stat-inner); border: 1px solid var(--border-card); border-radius: 12px; padding: 16px; font-size: 13.5px; line-height: 1.65; color: var(--text-primary); white-space: pre-wrap; word-break: break-word; }
+
     .session-row-wrap { display: flex; align-items: center; gap: 4px; width: 100%; }
     .btn-delete-session { width: 24px; height: 24px; border-radius: 6px; border: none; background: transparent; color: var(--text-secondary); font-size: 14px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.15s ease; }
     .btn-delete-session:hover { background-color: rgba(255, 82, 82, 0.18); color: #ff5252; }
@@ -231,12 +246,12 @@
     .history-session-title { font-size: 12px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
     .history-session-meta { font-size: 10px; color: var(--text-secondary); }
 
-    .chat-messages-area { padding: 18px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
-    .chat-bubble { padding: 13px 16px; border-radius: 14px; font-size: 13.5px; line-height: 1.55; max-width: 88%; white-space: pre-wrap; word-break: break-word; }
+    .chat-messages-area { flex: 1; min-height: 0; padding: 24px 32px; overflow-y: auto; overflow-x: hidden; display: flex; flex-direction: column; gap: 14px; scroll-behavior: smooth; }
+    .chat-bubble { padding: 14px 18px; border-radius: 14px; font-size: 14px; line-height: 1.6; max-width: min(820px, 88%); white-space: pre-wrap; word-break: break-word; flex-shrink: 0; }
     .chat-bubble.user { align-self: flex-end; background-color: var(--bg-nav-active); border: 1px solid var(--border-accent); color: var(--text-primary); }
     .chat-bubble.ai { align-self: flex-start; background-color: var(--bg-stat-inner); border: 1px solid var(--border-card); color: var(--text-primary); }
     .bubble-sender { font-size: 11px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
-    .chat-footer { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-top: 1px solid var(--border-divider); background-color: var(--bg-sidebar); }
+    .chat-footer { display: flex; align-items: center; gap: 12px; padding: 14px 24px; border-top: 1px solid var(--border-divider); background-color: var(--bg-sidebar); flex-shrink: 0; }
     .chat-modal-input { flex: 1; height: 42px; border-radius: 999px; border: 1px solid var(--border-accent); background-color: var(--bg-input); color: var(--text-primary); padding: 0 16px; font-size: 13.5px; outline: none; }
     .btn-primary-pill { height: 40px; padding: 0 18px; border-radius: 999px; background-color: var(--accent); color: var(--send-icon-color); font-size: 13px; font-weight: 700; border: none; cursor: pointer; }
     .btn-secondary-pill { height: 36px; padding: 0 14px; border-radius: 999px; background-color: var(--bg-icon-box); color: var(--accent); border: 1px solid var(--border-card); font-size: 12px; font-weight: 600; cursor: pointer; }
@@ -247,19 +262,31 @@
     .form-hint { font-size: 11px; color: var(--text-secondary); line-height: 1.4; }
     .form-input { height: 40px; border-radius: 10px; border: 1px solid var(--border-card); background-color: var(--bg-input); color: var(--text-primary); padding: 0 12px; font-size: 13px; outline: none; }
     .form-input:focus { border-color: var(--border-accent); }
-
     .toast-banner { position: fixed; bottom: 22px; right: 22px; background-color: var(--bg-card); border: 1px solid var(--border-accent); color: var(--text-primary); padding: 12px 18px; border-radius: 12px; font-size: 13px; font-weight: 600; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); z-index: 2000; opacity: 0; transform: translateY(12px); pointer-events: none; transition: all 0.22s ease; }
     .toast-banner.show { opacity: 1; transform: translateY(0); }
 
     @media (max-width: 1080px) {
-      .dashboard-shell { grid-template-columns: 200px 1fr 245px; }
-      .explore-grid { grid-template-columns: repeat(2, 1fr); }
+      .dashboard-shell { grid-template-columns: 200px minmax(0, 1fr) 245px; }
+      .modal-backdrop.fullscreen-workspace { left: 200px; width: calc(100vw - 200px); }
+      .explore-grid, .tools-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .tool-detail-grid { grid-template-columns: 1fr; }
       .hero-headline { font-size: 32px; }
     }
     @media (max-width: 780px) {
       .dashboard-shell { grid-template-columns: 1fr; }
-      .left-sidebar, .right-sidebar { border: none; border-bottom: 1px solid var(--border-divider); }
-      .chat-workspace-body { grid-template-columns: 1fr; }
+      .left-sidebar { position: sticky; top: 0; height: auto; max-height: none; padding: 10px 12px; border: none; border-bottom: 1px solid var(--border-divider); }
+      .brand-header { padding: 2px 4px 10px; }
+      .nav-list { flex-direction: row; overflow-x: auto; gap: 6px; padding-bottom: 4px; }
+      .nav-item { width: auto; white-space: nowrap; flex-shrink: 0; height: 34px; padding: 0 11px; font-size: 12.5px; }
+      .sidebar-divider, .sidebar-promo-card { display: none; }
+      .center-main { min-height: auto; padding: 18px 16px 28px; }
+      .right-sidebar { position: static; min-height: auto; max-height: none; border: none; border-top: 1px solid var(--border-divider); }
+      .modal-backdrop.fullscreen-workspace { left: 0; top: 0; width: 100vw; height: 100vh; height: 100dvh; z-index: 1200; }
+      .chat-workspace-body { display: flex; flex-direction: column; }
+      .chat-history-rail { max-height: 125px; flex-shrink: 0; border-right: none; border-bottom: 1px solid var(--border-divider); }
+      .chat-messages-area, .tools-scroll-container, .tool-detail-shell { padding: 16px; }
+      .tools-grid { grid-template-columns: 1fr; }
+      .chat-footer { padding: 10px 14px; }
     }
   </style>
 </head>
@@ -444,7 +471,7 @@
       </div>
     </main>
 
-    <!-- COLUMN 3: RIGHT SIDEBAR (RECENT & QUICK STATS) -->
+    <!-- COLUMN 3: RIGHT SIDEBAR -->
     <aside class="right-sidebar">
       <div>
         <div class="top-utility-bar">
@@ -515,8 +542,8 @@
     </aside>
   </div>
 
-  <!-- MODAL 1: LUMINARIES CHAT WORKSPACE WITH SAVED HISTORY & CROSS BUTTONS -->
-  <div class="modal-backdrop" id="chatModalBackdrop">
+  <!-- WORKSPACE 1: FULL-SCREEN LUMINARIES CHAT WORKSPACE -->
+  <div class="modal-backdrop fullscreen-workspace" id="chatModalBackdrop">
     <div class="modal-box">
       <div class="modal-header">
         <div class="modal-title">
@@ -538,17 +565,218 @@
           <div class="history-rail-label">Saved Chat History</div>
           <div class="history-session-list" id="modalHistorySessionList"></div>
         </div>
-        <div class="chat-messages-area" id="chatMessagesArea"></div>
-      </div>
 
-      <div class="chat-footer">
-        <input type="text" id="modalChatInput" class="chat-modal-input" placeholder="Message Lumin-1.2..." autocomplete="off" />
-        <button type="button" class="btn-primary-pill" id="btnModalSend">Send &rarr;</button>
+        <div class="workspace-main-col">
+          <div class="chat-messages-area" id="chatMessagesArea"></div>
+          <div class="chat-footer">
+            <input type="text" id="modalChatInput" class="chat-modal-input" placeholder="Message Lumin-1.2..." autocomplete="off" />
+            <button type="button" class="btn-primary-pill" id="btnModalSend">Send &rarr;</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- MODAL 2: SETTINGS MODAL (API KEY + FRIEND'S CUSTOM MODEL + THEME) -->
+  <!-- WORKSPACE 2: FULL-SCREEN LUMINARIES CREATE WORKSPACE -->
+  <div class="modal-backdrop fullscreen-workspace" id="createWorkspaceBackdrop">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span>&#10022; Luminaries Create Studio</span>
+          <span class="model-badge" id="createModelBadge">Lumin-1.2 &bull; Create</span>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center">
+          <button type="button" class="btn-secondary-pill" id="btnCopyCreateReply">Copy Reply</button>
+          <button type="button" class="btn-close-modal" id="btnCloseCreateModal">&#10005; Close</button>
+        </div>
+      </div>
+
+      <div class="chat-workspace-body">
+        <div class="chat-history-rail">
+          <div style="display:flex; gap:6px">
+            <button type="button" class="btn-new-chat" id="btnStartNewCreateSession" style="flex:1">+ New Create</button>
+            <button type="button" class="btn-close-modal" id="btnBackToHomeCreateRail" title="Close Create">&times;</button>
+          </div>
+          <div class="history-rail-label">Saved Create History</div>
+          <div class="history-session-list" id="createHistorySessionList"></div>
+        </div>
+
+        <div class="workspace-main-col">
+          <div class="workspace-tools-bar" id="createToolsBar">
+            <button type="button" class="workspace-tool-pill active" data-create-tool="Essay & Story">Essay &amp; Story</button>
+            <button type="button" class="workspace-tool-pill" data-create-tool="Email & Copy">Email &amp; Copy</button>
+            <button type="button" class="workspace-tool-pill" data-create-tool="Code Generator">Code Generator</button>
+            <button type="button" class="workspace-tool-pill" data-create-tool="Study Notes">Study Notes</button>
+            <button type="button" class="workspace-tool-pill" data-create-tool="Project Outline">Project Outline</button>
+          </div>
+          <div class="chat-messages-area" id="createMessagesArea"></div>
+          <div class="chat-footer">
+            <input type="text" id="createModalInput" class="chat-modal-input" placeholder="Describe what you want to create (Essay & Story)..." autocomplete="off" />
+            <button type="button" class="btn-primary-pill" id="btnCreateSend">Create &rarr;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORKSPACE 3: FULL-SCREEN LUMINARIES RESEARCH WORKSPACE -->
+  <div class="modal-backdrop fullscreen-workspace" id="researchWorkspaceBackdrop">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span>&#10022; Luminaries Research Lab</span>
+          <span class="model-badge" id="researchModelBadge">Lumin-1.2 &bull; Research</span>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center">
+          <button type="button" class="btn-secondary-pill" id="btnCopyResearchReply">Copy Reply</button>
+          <button type="button" class="btn-close-modal" id="btnCloseResearchModal">&#10005; Close</button>
+        </div>
+      </div>
+
+      <div class="chat-workspace-body">
+        <div class="chat-history-rail">
+          <div style="display:flex; gap:6px">
+            <button type="button" class="btn-new-chat" id="btnStartNewResearchSession" style="flex:1">+ New Research</button>
+            <button type="button" class="btn-close-modal" id="btnBackToHomeResearchRail" title="Close Research">&times;</button>
+          </div>
+          <div class="history-rail-label">Saved Research History</div>
+          <div class="history-session-list" id="researchHistorySessionList"></div>
+        </div>
+
+        <div class="workspace-main-col">
+          <div class="workspace-tools-bar" id="researchToolsBar">
+            <button type="button" class="workspace-tool-pill active" data-research-tool="Deep Topic Analysis">Deep Topic Analysis</button>
+            <button type="button" class="workspace-tool-pill" data-research-tool="Key Facts & Summary">Key Facts &amp; Summary</button>
+            <button type="button" class="workspace-tool-pill" data-research-tool="Compare Concepts">Compare Concepts</button>
+            <button type="button" class="workspace-tool-pill" data-research-tool="Exam Q&A Prep">Exam Q&amp;A Prep</button>
+            <button type="button" class="workspace-tool-pill" data-research-tool="Literature Review">Literature Review</button>
+          </div>
+          <div class="chat-messages-area" id="researchMessagesArea"></div>
+          <div class="chat-footer">
+            <input type="text" id="researchModalInput" class="chat-modal-input" placeholder="Enter a topic or question to research (Deep Topic Analysis)..." autocomplete="off" />
+            <button type="button" class="btn-primary-pill" id="btnResearchSend">Research &rarr;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORKSPACE 4: FULL-SCREEN LUMINARIES TOOLS WORKSPACE -->
+  <div class="modal-backdrop fullscreen-workspace" id="toolsWorkspaceBackdrop">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span>&#10022; Luminaries Tools Hub</span>
+          <span class="model-badge" id="toolsModelBadge">Lumin-1.2 &bull; 8 Specialized Tools</span>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center">
+          <button type="button" class="btn-secondary-pill" id="btnToolsBackToGridTop" style="display:none">&larr; All Tools</button>
+          <button type="button" class="btn-close-modal" id="btnCloseToolsModal">&#10005; Close</button>
+        </div>
+      </div>
+
+      <!-- SUB-VIEW A: Searchable 8-Tool Dashboard Grid -->
+      <div class="tools-scroll-container" id="toolsDashboardView">
+        <div class="tools-top-controls">
+          <div>
+            <h2 class="section-title" style="margin:0 0 4px 0">AI &amp; Study Utility Tools</h2>
+            <p class="form-hint" style="font-size:12.5px">Select any specialized tool below to open its dedicated workspace. Does not clutter or mix with your saved chats.</p>
+          </div>
+          <div class="tools-search-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7" /><line x1="20" y1="20" x2="16.2" y2="16.2" /></svg>
+            <input type="text" id="toolsSearchInput" class="tools-search-input" placeholder="Search 8 tools (PDF, grammar, debugger, translator, quiz, JSON, math)..." autocomplete="off" />
+          </div>
+        </div>
+
+        <div class="chips-row" style="margin-top:0" id="toolsCategoryFilterBar">
+          <button type="button" class="workspace-tool-pill active" data-tool-cat="All">All Tools (8)</button>
+          <button type="button" class="workspace-tool-pill" data-tool-cat="Document & Text">Document &amp; Text</button>
+          <button type="button" class="workspace-tool-pill" data-tool-cat="Coding & Data">Coding &amp; Data</button>
+          <button type="button" class="workspace-tool-pill" data-tool-cat="Study & Math">Study &amp; Math</button>
+        </div>
+
+        <div class="tools-grid" id="toolsDashboardGrid"></div>
+      </div>
+
+      <!-- SUB-VIEW B: Dedicated Individual Tool Workspace -->
+      <div class="tool-detail-shell" id="activeToolWorkspaceView" style="display:none">
+        <div class="tool-detail-topbar">
+          <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap">
+            <button type="button" class="btn-secondary-pill" id="btnBackToToolsGrid">&larr; Back to Tools</button>
+            <div>
+              <div style="font-size:16px; font-weight:700; color:var(--text-primary)" id="activeToolTitle">PDF Summarizer</div>
+              <div class="form-hint" id="activeToolSubtitle">Upload a PDF document to extract text and generate a structured summary.</div>
+            </div>
+          </div>
+          <div style="display:flex; gap:8px; align-items:center">
+            <button type="button" class="btn-secondary-pill" id="btnLoadToolSample">Load Sample Input</button>
+            <button type="button" class="btn-secondary-pill" id="btnClearToolWorkspace">Clear</button>
+            <button type="button" class="btn-secondary-pill" id="btnCopyToolOutput">Copy Result</button>
+          </div>
+        </div>
+
+        <div class="tool-detail-grid">
+          <div class="tool-panel-card">
+            <div id="pdfUploadSection" style="display:none; flex-direction:column; gap:10px">
+              <label class="form-label">1. Upload PDF File (Max 10 MB, <code>.pdf</code> only)</label>
+              <input type="file" id="pdfToolFileInput" accept=".pdf,application/pdf" style="display:none" />
+              <div class="pdf-dropzone" id="pdfDropzoneBox">
+                <div style="font-size:13px; font-weight:700; color:var(--accent); margin-bottom:4px" id="pdfDropzoneTitle">&#128196; Click to Select a PDF File</div>
+                <div class="form-hint" id="pdfDropzoneMeta">Extracts real text from your PDF in the browser using PDF.js + binary stream parser.</div>
+              </div>
+            </div>
+
+            <div class="tool-options-row">
+              <div class="form-group">
+                <label class="form-label" id="labelOptionPrimary" for="toolOptionPrimary">Mode / Format</label>
+                <select id="toolOptionPrimary" class="tool-select"></select>
+              </div>
+              <div class="form-group" id="groupOptionSecondary">
+                <label class="form-label" id="labelOptionSecondary" for="toolOptionSecondary">Target / Style</label>
+                <select id="toolOptionSecondary" class="tool-select"></select>
+              </div>
+            </div>
+
+            <div class="form-group" id="groupSecondaryInput" style="display:none">
+              <label class="form-label" id="labelSecondaryInput" for="toolSecondaryInput">Compiler Error / Stack Trace (Optional)</label>
+              <input type="text" id="toolSecondaryInput" class="form-input" placeholder="e.g., TypeError: Cannot read properties of undefined..." />
+            </div>
+
+            <div class="form-group">
+              <div style="display:flex; justify-content:space-between; align-items:center">
+                <label class="form-label" id="labelPrimaryTextarea" for="toolPrimaryTextarea">Input Content</label>
+                <span class="form-hint" id="toolInputStats">0 words &bull; 0 chars</span>
+              </div>
+              <textarea id="toolPrimaryTextarea" class="tool-textarea" placeholder="Enter or paste your text here..."></textarea>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap">
+              <span class="form-hint" id="toolExecutionHint">Uses your configured FastAPI / AI backend without saving a chat session.</span>
+              <div style="display:flex; gap:8px">
+                <button type="button" class="btn-secondary-pill" id="btnLocalToolAction" style="display:none">Instant Local Run</button>
+                <button type="button" class="btn-primary-pill" id="btnRunActiveTool">Run Tool &rarr;</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-panel-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px">
+              <span class="form-label">Tool Output &amp; Analysis</span>
+              <span class="model-badge" id="toolResultMetaBadge">Ready</span>
+            </div>
+            <div class="tool-error-banner" id="toolErrorBanner"></div>
+            <div class="tool-loading-box" id="toolLoadingState">
+              <span>&#10022;</span>
+              <span id="toolLoadingText">Processing with Lumin-1.2...</span>
+            </div>
+            <div class="tool-result-box" id="toolResultOutput">Select options on the left and click "Run Tool" to generate results here.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: SETTINGS MODAL -->
   <div class="modal-backdrop" id="settingsModalBackdrop">
     <div class="modal-box" style="max-width:540px">
       <div class="modal-header">
@@ -565,20 +793,32 @@
           <input type="text" id="inputModelName" class="form-input" placeholder="Lumin-1.2" value="Lumin-1.2" />
           <span class="form-hint">Displayed across your chat assistant (e.g., Lumin-1.2 or your friend's model name).</span>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="inputApiKey">API Key (ChatGPT / Gemini / Custom Key)</label>
-          <input type="password" id="inputApiKey" class="form-input" placeholder="Paste sk-... (ChatGPT), AIza... (Gemini), or lumin-1.2" />
-          <span class="form-hint">Saved directly in your browser's local storage. Works after deploying to GitHub Pages!</span>
+
+        <div class="form-group" style="background:var(--bg-icon-box); border:1px solid var(--border-accent); border-radius:11px; padding:10px 12px">
+          <div style="font-size:12px; font-weight:700; color:var(--accent); margin-bottom:3px">&#128274; Secure Backend Proxy Mode (No API Key in Browser)</div>
+          <span class="form-hint" style="color:var(--text-primary)">API keys are <strong>never</strong> saved in <code>localStorage</code> or sent directly from the browser to OpenAI/Gemini. Keep your API key on your backend server (<code>.env</code>) and connect via the Backend Proxy URL below.</span>
         </div>
+
         <div class="form-group">
-          <label class="form-label" for="inputCustomEndpoint">Friend's Trained Model API URL (Optional)</label>
-          <input type="text" id="inputCustomEndpoint" class="form-input" placeholder="e.g. https://your-friend-model-api.com/v1/chat/completions" />
-          <span class="form-hint">If your friend hosted a trained model (FastAPI, Flask, Colab/Ngrok, or Hugging Face), paste the URL here.</span>
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px">
+            <label class="form-label" for="inputCustomEndpoint">FastAPI Backend URL (Vercel / Custom Server)</label>
+            <button type="button" class="btn-secondary-pill" id="btnTestBackend" style="height:28px; padding:0 11px; font-size:11px">Test FastAPI Connection</button>
+          </div>
+          <input type="text" id="inputCustomEndpoint" class="form-input" placeholder="https://your-fastapi-backend.vercel.app/api/chat" />
+          <span class="form-hint" id="backendConnectionStatus">Paste your deployed Vercel FastAPI URL (e.g., <code>https://your-project.vercel.app/api/chat</code>). While testing or before deployment, your existing public AI endpoint remains active as a fallback.</span>
         </div>
+
+        <div class="form-group">
+          <label class="form-label" for="inputSessionToken">Optional Backend Session Passcode (RAM-Only &bull; Never Saved to Storage)</label>
+          <input type="password" id="inputSessionToken" class="form-input" placeholder="Optional session passcode for your private backend (cleared on tab close)" autocomplete="off" />
+          <span class="form-hint">Kept strictly in temporary memory for this tab only—never written to <code>localStorage</code> or <code>sessionStorage</code>.</span>
+        </div>
+
         <div class="form-group">
           <label class="form-label" for="inputUserName">Display Name</label>
           <input type="text" id="inputUserName" class="form-input" placeholder="Yafrah" value="Yafrah" />
         </div>
+
         <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; padding-top:8px">
           <button type="button" class="btn-secondary-pill" id="btnSettingsToggleTheme">Switch Dark / Light Mode</button>
           <div style="display:flex; gap:8px">
@@ -647,19 +887,73 @@
         }
       ];
 
+      const DEFAULT_CREATE_SESSIONS = [
+        {
+          id: "create-1",
+          title: "Professional Study Email",
+          category: "Email & Copy",
+          time: "1 hour ago",
+          messages: [
+            { sender: "You (Yafrah)", text: "Draft a polite email to my professor asking for project feedback.", isUser: true },
+            { sender: "✦ Lumin-1.2 (Create Studio)", text: "Subject: Request for Feedback on Semester Project Draft\n\nDear Professor,\n\nI hope you are having a great week. I have completed the initial draft of my project and would be very grateful for your feedback during office hours.\n\nBest regards,\nYafrah", isUser: false }
+          ]
+        },
+        {
+          id: "create-2",
+          title: "Algorithm Revision Notes",
+          category: "Study Notes",
+          time: "Yesterday",
+          messages: [
+            { sender: "You (Yafrah)", text: "Create revision notes on sorting algorithms.", isUser: true },
+            { sender: "✦ Lumin-1.2 (Create Studio)", text: "Sorting Algorithms Quick Notes:\n• Merge Sort: O(n log n) time, O(n) space, stable divide-and-conquer.\n• Quick Sort: O(n log n) average time, O(log n) in-place partitioning.\n• Insertion Sort: O(n^2) worst case, O(n) for nearly sorted arrays.", isUser: false }
+          ]
+        }
+      ];
+
+      const DEFAULT_RESEARCH_SESSIONS = [
+        {
+          id: "research-1",
+          title: "AI Study Assistant Architecture",
+          category: "Deep Topic Analysis",
+          time: "2 hours ago",
+          messages: [
+            { sender: "You (Yafrah)", text: "Analyze how a frontend connects securely to an OpenAI FastAPI backend.", isUser: true },
+            { sender: "✦ Lumin-1.2 (Research Lab)", text: "Research Summary — Secure Client-Server AI Architecture:\n1. Frontend (GitHub Pages): Sends user prompts & conversation context over HTTPS to /api/chat.\n2. Backend (FastAPI on Vercel): Validates input, enforces rate limits, and attaches OPENAI_API_KEY from server environment variables.\n3. Benefit: Zero secret keys exposed in browser storage or client source code.", isUser: false }
+          ]
+        },
+        {
+          id: "research-2",
+          title: "SQL vs NoSQL Comparison",
+          category: "Compare Concepts",
+          time: "Yesterday",
+          messages: [
+            { sender: "You (Yafrah)", text: "Compare relational SQL databases and NoSQL document stores.", isUser: true },
+            { sender: "✦ Lumin-1.2 (Research Lab)", text: "Concept Comparison — SQL vs. NoSQL:\n• Schema: SQL enforces predefined relational tables; NoSQL stores flexible JSON-like documents.\n• Scaling: SQL scales vertically with strong ACID joins; NoSQL scales horizontally across distributed clusters.", isUser: false }
+          ]
+        }
+      ];
+
       const DEFAULT_STATS = { chats: 24, created: 12, files: 8, hours: 18 };
+      let ephemeralBackendToken = "";
 
       let state = {
         theme: "dark",
         userName: "Yafrah",
         modelName: "Lumin-1.2",
-        apiKey: "",
-        customEndpoint: "",
+        customEndpoint: "/api/chat",
         activeCategory: "Code",
         activeSessionId: "session-1",
+        activeCreateTool: "Essay & Story",
+        activeCreateSessionId: "create-1",
+        activeResearchTool: "Deep Topic Analysis",
+        activeResearchSessionId: "research-1",
         stats: { ...DEFAULT_STATS },
         sessions: JSON.parse(JSON.stringify(DEFAULT_SESSIONS)),
-        lastReply: ""
+        createSessions: JSON.parse(JSON.stringify(DEFAULT_CREATE_SESSIONS)),
+        researchSessions: JSON.parse(JSON.stringify(DEFAULT_RESEARCH_SESSIONS)),
+        lastReply: "",
+        lastCreateReply: "",
+        lastResearchReply: ""
       };
 
       function loadState() {
@@ -667,20 +961,48 @@
           const raw = localStorage.getItem("luminaries_web_state_v2");
           if (raw) {
             const parsed = JSON.parse(raw);
+            if ("apiKey" in parsed) delete parsed.apiKey;
             state = {
               ...state,
-              ...parsed,
+              theme: parsed.theme || state.theme,
+              userName: parsed.userName || state.userName,
+              modelName: parsed.modelName || state.modelName,
+              customEndpoint: parsed.customEndpoint || "/api/chat",
+              activeCategory: parsed.activeCategory || state.activeCategory,
+              activeSessionId: parsed.activeSessionId || state.activeSessionId,
+              activeCreateTool: parsed.activeCreateTool || state.activeCreateTool,
+              activeCreateSessionId: parsed.activeCreateSessionId || state.activeCreateSessionId,
+              activeResearchTool: parsed.activeResearchTool || state.activeResearchTool,
+              activeResearchSessionId: parsed.activeResearchSessionId || state.activeResearchSessionId,
               stats: { ...DEFAULT_STATS, ...(parsed.stats || {}) },
-              sessions: Array.isArray(parsed.sessions) && parsed.sessions.length
-                ? parsed.sessions
-                : JSON.parse(JSON.stringify(DEFAULT_SESSIONS))
+              sessions: Array.isArray(parsed.sessions) && parsed.sessions.length ? parsed.sessions : JSON.parse(JSON.stringify(DEFAULT_SESSIONS)),
+              createSessions: Array.isArray(parsed.createSessions) && parsed.createSessions.length ? parsed.createSessions : JSON.parse(JSON.stringify(DEFAULT_CREATE_SESSIONS)),
+              researchSessions: Array.isArray(parsed.researchSessions) && parsed.researchSessions.length ? parsed.researchSessions : JSON.parse(JSON.stringify(DEFAULT_RESEARCH_SESSIONS))
             };
           }
         } catch (e) {}
       }
 
       function saveState() {
-        try { localStorage.setItem("luminaries_web_state_v2", JSON.stringify(state)); } catch (e) {}
+        try {
+          const safePublicState = {
+            theme: state.theme,
+            userName: state.userName,
+            modelName: state.modelName,
+            customEndpoint: state.customEndpoint,
+            activeCategory: state.activeCategory,
+            activeSessionId: state.activeSessionId,
+            activeCreateTool: state.activeCreateTool,
+            activeCreateSessionId: state.activeCreateSessionId,
+            activeResearchTool: state.activeResearchTool,
+            activeResearchSessionId: state.activeResearchSessionId,
+            stats: state.stats,
+            sessions: state.sessions,
+            createSessions: state.createSessions,
+            researchSessions: state.researchSessions
+          };
+          localStorage.setItem("luminaries_web_state_v2", JSON.stringify(safePublicState));
+        } catch (e) {}
       }
 
       function showToast(msg) {
@@ -688,6 +1010,21 @@
         el.textContent = msg;
         el.classList.add("show");
         setTimeout(() => el.classList.remove("show"), 2600);
+      }
+
+      function copyTextToClipboard(text) {
+        if (!text) return;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).catch(() => {});
+        } else {
+          const ta = document.createElement("textarea");
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand("copy"); } catch (_) {}
+          document.body.removeChild(ta);
+        }
+        showToast("Copied response to clipboard!");
       }
 
       function applyTheme() { document.documentElement.setAttribute("data-theme", state.theme); }
@@ -698,6 +1035,19 @@
         showToast(state.theme === "dark" ? "Switched to Dark Mode" : "Switched to Light Mode");
       }
 
+      function setActiveSidebarNav(navName) {
+        document.querySelectorAll(".nav-item[data-nav]").forEach((btn) => {
+          btn.classList.toggle("active", btn.getAttribute("data-nav") === navName);
+        });
+      }
+
+      function closeAllWorkspaces() {
+        document.getElementById("chatModalBackdrop").classList.remove("open");
+        document.getElementById("createWorkspaceBackdrop").classList.remove("open");
+        document.getElementById("researchWorkspaceBackdrop").classList.remove("open");
+        document.getElementById("toolsWorkspaceBackdrop").classList.remove("open");
+      }
+
       function getRecentIconSvg(category) {
         const cat = (category || "").toLowerCase();
         if (cat.includes("code") || cat.includes("coding")) {
@@ -706,7 +1056,7 @@
         if (cat.includes("image")) {
           return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>';
         }
-        if (cat.includes("research")) {
+        if (cat.includes("research") || cat.includes("analysis") || cat.includes("compare")) {
           return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>';
         }
         return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>';
@@ -721,15 +1071,28 @@
         return found;
       }
 
+      function getActiveCreateSession() {
+        let found = state.createSessions.find((s) => s.id === state.activeCreateSessionId);
+        if (!found && state.createSessions.length > 0) {
+          found = state.createSessions[0];
+          state.activeCreateSessionId = found.id;
+        }
+        return found;
+      }
+
+      function getActiveResearchSession() {
+        let found = state.researchSessions.find((s) => s.id === state.activeResearchSessionId);
+        if (!found && state.researchSessions.length > 0) {
+          found = state.researchSessions[0];
+          state.activeResearchSessionId = found.id;
+        }
+        return found;
+      }
+
       function deleteChatSession(sessionId) {
-        if (state.sessions.length <= 1) {
-          showToast("At least one chat session is kept.");
-          return;
-        }
+        if (state.sessions.length <= 1) { showToast("At least one chat session is kept."); return; }
         state.sessions = state.sessions.filter((s) => s.id !== sessionId);
-        if (state.activeSessionId === sessionId) {
-          state.activeSessionId = state.sessions[0].id;
-        }
+        if (state.activeSessionId === sessionId) state.activeSessionId = state.sessions[0].id;
         saveState();
         renderModalHistoryRail();
         renderActiveSessionMessages();
@@ -737,12 +1100,28 @@
         showToast("Chat deleted from history");
       }
 
+      function deleteCreateSession(sessionId) {
+        if (state.createSessions.length <= 1) { showToast("At least one Create session is kept."); return; }
+        state.createSessions = state.createSessions.filter((s) => s.id !== sessionId);
+        if (state.activeCreateSessionId === sessionId) state.activeCreateSessionId = state.createSessions[0].id;
+        saveState();
+        renderCreateWorkspace();
+        showToast("Create session deleted");
+      }
+
+      function deleteResearchSession(sessionId) {
+        if (state.researchSessions.length <= 1) { showToast("At least one Research session is kept."); return; }
+        state.researchSessions = state.researchSessions.filter((s) => s.id !== sessionId);
+        if (state.activeResearchSessionId === sessionId) state.activeResearchSessionId = state.researchSessions[0].id;
+        saveState();
+        renderResearchWorkspace();
+        showToast("Research session deleted");
+      }
+
       function createNewChatSession(category, firstPrompt) {
         const cat = category || state.activeCategory || "Study";
         if (!firstPrompt) {
-          const existingEmpty = state.sessions.find(
-            (s) => s.title.startsWith("New ") && s.messages && s.messages.length <= 1
-          );
+          const existingEmpty = state.sessions.find((s) => s.title.startsWith("New ") && s.messages && s.messages.length <= 1);
           if (existingEmpty) {
             existingEmpty.category = cat;
             existingEmpty.title = `New ${cat} Chat`;
@@ -757,17 +1136,11 @@
         const modelTitle = state.modelName || "Lumin-1.2";
         const newSession = {
           id: newId,
-          title: firstPrompt
-            ? (firstPrompt.length > 22 ? firstPrompt.slice(0, 22) + "..." : firstPrompt)
-            : `New ${cat} Chat`,
+          title: firstPrompt ? (firstPrompt.length > 22 ? firstPrompt.slice(0, 22) + "..." : firstPrompt) : `New ${cat} Chat`,
           category: cat,
           time: "Just now",
           messages: [
-            {
-              sender: `✦ ${modelTitle} (${cat} Mode)`,
-              text: `Hi ${state.userName}! I'm ${modelTitle}. Ask me any study, coding, writing, or research question—your full chat history is saved automatically in Recent!`,
-              isUser: false
-            }
+            { sender: `✦ ${modelTitle} (${cat} Mode)`, text: `Hi ${state.userName}! I'm ${modelTitle}. Ask me any study, coding, writing, or research question—your full chat history is saved automatically in Recent!`, isUser: false }
           ]
         };
         state.sessions.unshift(newSession);
@@ -775,6 +1148,68 @@
         state.activeCategory = cat;
         saveState();
         renderDashboard();
+        return newSession;
+      }
+
+      function createNewCreateSession(toolName, firstPrompt) {
+        const tool = toolName || state.activeCreateTool || "Essay & Story";
+        if (!firstPrompt) {
+          const existingEmpty = state.createSessions.find((s) => s.title.startsWith("New ") && s.messages && s.messages.length <= 1);
+          if (existingEmpty) {
+            existingEmpty.category = tool;
+            existingEmpty.title = `New ${tool}`;
+            state.activeCreateSessionId = existingEmpty.id;
+            state.activeCreateTool = tool;
+            saveState();
+            return existingEmpty;
+          }
+        }
+        const newId = "create-" + Date.now();
+        const modelTitle = state.modelName || "Lumin-1.2";
+        const newSession = {
+          id: newId,
+          title: firstPrompt ? (firstPrompt.length > 24 ? firstPrompt.slice(0, 24) + "..." : firstPrompt) : `New ${tool}`,
+          category: tool,
+          time: "Just now",
+          messages: [
+            { sender: `✦ ${modelTitle} (Create Studio • ${tool})`, text: `Welcome to Create Studio, ${state.userName}! Describe the ${tool.toLowerCase()} you want to draft, and I will generate structured, ready-to-use content here.`, isUser: false }
+          ]
+        };
+        state.createSessions.unshift(newSession);
+        state.activeCreateSessionId = newId;
+        state.activeCreateTool = tool;
+        saveState();
+        return newSession;
+      }
+
+      function createNewResearchSession(toolName, firstPrompt) {
+        const tool = toolName || state.activeResearchTool || "Deep Topic Analysis";
+        if (!firstPrompt) {
+          const existingEmpty = state.researchSessions.find((s) => s.title.startsWith("New ") && s.messages && s.messages.length <= 1);
+          if (existingEmpty) {
+            existingEmpty.category = tool;
+            existingEmpty.title = `New ${tool}`;
+            state.activeResearchSessionId = existingEmpty.id;
+            state.activeResearchTool = tool;
+            saveState();
+            return existingEmpty;
+          }
+        }
+        const newId = "research-" + Date.now();
+        const modelTitle = state.modelName || "Lumin-1.2";
+        const newSession = {
+          id: newId,
+          title: firstPrompt ? (firstPrompt.length > 24 ? firstPrompt.slice(0, 24) + "..." : firstPrompt) : `New ${tool}`,
+          category: tool,
+          time: "Just now",
+          messages: [
+            { sender: `✦ ${modelTitle} (Research Lab • ${tool})`, text: `Welcome to Research Lab, ${state.userName}! Enter any subject, concept, or question below for a structured ${tool.toLowerCase()}.`, isUser: false }
+          ]
+        };
+        state.researchSessions.unshift(newSession);
+        state.activeResearchSessionId = newId;
+        state.activeResearchTool = tool;
+        saveState();
         return newSession;
       }
 
@@ -790,6 +1225,9 @@
 
         const badgeText = state.modelName || "Lumin-1.2";
         document.getElementById("activeModelBadge").textContent = badgeText;
+        document.getElementById("createModelBadge").textContent = `${badgeText} • Create`;
+        document.getElementById("researchModelBadge").textContent = `${badgeText} • Research`;
+        document.getElementById("toolsModelBadge").textContent = `${badgeText} • 8 Specialized Tools`;
         document.getElementById("settingsModelStatusBadge").textContent = `${badgeText} Active`;
 
         const container = document.getElementById("recentListContainer");
@@ -822,10 +1260,10 @@
         });
       }
 
-      function renderModalHistoryRail() {
-        const railList = document.getElementById("modalHistorySessionList");
+      function renderSessionRailList(listContainerId, sessionsArray, activeId, onSelectSession, onDeleteSession) {
+        const railList = document.getElementById(listContainerId);
         railList.innerHTML = "";
-        state.sessions.forEach((session) => {
+        sessionsArray.forEach((session) => {
           const wrap = document.createElement("div");
           wrap.className = "session-row-wrap";
 
@@ -833,7 +1271,7 @@
           btn.type = "button";
           btn.style.flex = "1";
           btn.style.minWidth = "0";
-          btn.className = "history-session-btn" + (session.id === state.activeSessionId ? " active" : "");
+          btn.className = "history-session-btn" + (session.id === activeId ? " active" : "");
 
           const titleEl = document.createElement("div");
           titleEl.className = "history-session-title";
@@ -845,22 +1283,16 @@
 
           btn.appendChild(titleEl);
           btn.appendChild(metaEl);
-          btn.addEventListener("click", () => {
-            state.activeSessionId = session.id;
-            state.activeCategory = session.category;
-            renderModalHistoryRail();
-            renderActiveSessionMessages();
-            renderDashboard();
-          });
+          btn.addEventListener("click", () => onSelectSession(session));
 
           const delBtn = document.createElement("button");
           delBtn.type = "button";
           delBtn.className = "btn-delete-session";
-          delBtn.title = "Delete this chat";
+          delBtn.title = "Delete session";
           delBtn.innerHTML = "&times;";
           delBtn.addEventListener("click", (e) => {
             e.stopPropagation();
-            deleteChatSession(session.id);
+            onDeleteSession(session.id);
           });
 
           wrap.appendChild(btn);
@@ -869,8 +1301,24 @@
         });
       }
 
-      function appendChatBubbleToDom(sender, text, isUser) {
-        const area = document.getElementById("chatMessagesArea");
+      function renderModalHistoryRail() {
+        renderSessionRailList(
+          "modalHistorySessionList",
+          state.sessions,
+          state.activeSessionId,
+          (session) => {
+            state.activeSessionId = session.id;
+            state.activeCategory = session.category;
+            renderModalHistoryRail();
+            renderActiveSessionMessages();
+            renderDashboard();
+          },
+          deleteChatSession
+        );
+      }
+
+      function appendBubbleToArea(areaId, sender, text, isUser) {
+        const area = document.getElementById(areaId);
         const wrap = document.createElement("div");
         wrap.className = `chat-bubble ${isUser ? "user" : "ai"}`;
 
@@ -888,6 +1336,10 @@
         return bodyEl;
       }
 
+      function appendChatBubbleToDom(sender, text, isUser) {
+        return appendBubbleToArea("chatMessagesArea", sender, text, isUser);
+      }
+
       function renderActiveSessionMessages() {
         const session = getActiveSession();
         const area = document.getElementById("chatMessagesArea");
@@ -902,10 +1354,71 @@
           appendChatBubbleToDom(m.sender, m.text, m.isUser);
           if (!m.isUser) state.lastReply = m.text;
         });
+        area.scrollTop = area.scrollHeight;
+      }
+
+      function renderCreateWorkspace() {
+        const session = getActiveCreateSession();
+        renderSessionRailList(
+          "createHistorySessionList",
+          state.createSessions,
+          state.activeCreateSessionId,
+          (selected) => {
+            state.activeCreateSessionId = selected.id;
+            state.activeCreateTool = selected.category;
+            renderCreateWorkspace();
+          },
+          deleteCreateSession
+        );
+        document.querySelectorAll("#createToolsBar .workspace-tool-pill").forEach((pill) => {
+          pill.classList.toggle("active", pill.getAttribute("data-create-tool") === state.activeCreateTool);
+        });
+        const area = document.getElementById("createMessagesArea");
+        area.innerHTML = "";
+        if (!session) return;
+        const modelTitle = state.modelName || "Lumin-1.2";
+        document.getElementById("createModelBadge").textContent = `${modelTitle} • ${session.category}`;
+        document.getElementById("createModalInput").placeholder = `Describe what to create (${state.activeCreateTool})...`;
+        session.messages.forEach((m) => {
+          appendBubbleToArea("createMessagesArea", m.sender, m.text, m.isUser);
+          if (!m.isUser) state.lastCreateReply = m.text;
+        });
+        area.scrollTop = area.scrollHeight;
+      }
+
+      function renderResearchWorkspace() {
+        const session = getActiveResearchSession();
+        renderSessionRailList(
+          "researchHistorySessionList",
+          state.researchSessions,
+          state.activeResearchSessionId,
+          (selected) => {
+            state.activeResearchSessionId = selected.id;
+            state.activeResearchTool = selected.category;
+            renderResearchWorkspace();
+          },
+          deleteResearchSession
+        );
+        document.querySelectorAll("#researchToolsBar .workspace-tool-pill").forEach((pill) => {
+          pill.classList.toggle("active", pill.getAttribute("data-research-tool") === state.activeResearchTool);
+        });
+        const area = document.getElementById("researchMessagesArea");
+        area.innerHTML = "";
+        if (!session) return;
+        const modelTitle = state.modelName || "Lumin-1.2";
+        document.getElementById("researchModelBadge").textContent = `${modelTitle} • ${session.category}`;
+        document.getElementById("researchModalInput").placeholder = `Enter a topic or question to research (${state.activeResearchTool})...`;
+        session.messages.forEach((m) => {
+          appendBubbleToArea("researchMessagesArea", m.sender, m.text, m.isUser);
+          if (!m.isUser) state.lastResearchReply = m.text;
+        });
+        area.scrollTop = area.scrollHeight;
       }
 
       function openChatModalForSession(sessionId) {
+        closeAllWorkspaces();
         if (sessionId) state.activeSessionId = sessionId;
+        setActiveSidebarNav("Chat");
         renderModalHistoryRail();
         renderActiveSessionMessages();
         renderDashboard();
@@ -913,86 +1426,82 @@
         setTimeout(() => document.getElementById("modalChatInput").focus(), 80);
       }
 
+      function openCreateWorkspace(sessionId) {
+        closeAllWorkspaces();
+        if (sessionId) state.activeCreateSessionId = sessionId;
+        setActiveSidebarNav("Create");
+        renderCreateWorkspace();
+        renderDashboard();
+        document.getElementById("createWorkspaceBackdrop").classList.add("open");
+        setTimeout(() => document.getElementById("createModalInput").focus(), 80);
+      }
+
+      function openResearchWorkspace(sessionId) {
+        closeAllWorkspaces();
+        if (sessionId) state.activeResearchSessionId = sessionId;
+        setActiveSidebarNav("Research");
+        renderResearchWorkspace();
+        renderDashboard();
+        document.getElementById("researchWorkspaceBackdrop").classList.add("open");
+        setTimeout(() => document.getElementById("researchModalInput").focus(), 80);
+      }
+
+      function normalizeBackendChatUrl(rawUrl) {
+        const trimmed = (rawUrl || "/api/chat").trim().replace(/\/+$/, "");
+        if (!trimmed) return "/api/chat";
+        if (/^https?:\/\/[^/]+$/i.test(trimmed)) return trimmed + "/api/chat";
+        return trimmed;
+      }
+
+      function normalizeBackendHealthUrl(rawUrl) {
+        const chatUrl = normalizeBackendChatUrl(rawUrl);
+        if (chatUrl.endsWith("/api/chat")) return chatUrl.slice(0, -"/api/chat".length) + "/api/health";
+        return "/api/health";
+      }
+
       async function queryAiEngine(category, promptText, sessionMessages) {
         const modelLabel = state.modelName || "Lumin-1.2";
         const systemInstruction = `Your name is ${modelLabel}, a friendly Study Assistant inside the Luminaries workspace. Always explain concepts in simple, easy-to-understand student language step by step, just like ChatGPT.`;
 
-        if (state.customEndpoint && state.customEndpoint.trim() !== "") {
+        const backendUrl = normalizeBackendChatUrl(state.customEndpoint);
+        if (backendUrl) {
           try {
             const headers = { "Content-Type": "application/json" };
-            if (state.apiKey && state.apiKey.trim() !== "") {
-              headers["Authorization"] = `Bearer ${state.apiKey.trim()}`;
-            }
-            const res = await fetch(state.customEndpoint.trim(), {
+            if (ephemeralBackendToken.trim() !== "") headers["X-Client-Passcode"] = ephemeralBackendToken.trim();
+            const priorMessages = (sessionMessages || []).slice(0, -1).slice(-6);
+            const historyTurns = priorMessages.map((m) => ({
+              role: m.isUser ? "user" : "assistant",
+              content: m.text
+            }));
+            const res = await fetch(backendUrl, {
               method: "POST",
               headers,
               body: JSON.stringify({
                 model: modelLabel,
+                category,
                 prompt: promptText,
                 message: promptText,
-                query: promptText,
-                inputs: promptText,
-                messages: [
-                  { role: "system", content: `${systemInstruction} Mode: ${category}` },
-                  { role: "user", content: promptText }
-                ]
+                messages: [...historyTurns, { role: "user", content: promptText }]
               })
             });
             if (res.ok) {
               const data = await res.json();
-              if (data.choices && data.choices[0] && data.choices[0].message) {
-                return data.choices[0].message.content.trim();
+              if (data.provider === "openai" || data.provider_model) {
+                const openAiLabel = `${modelLabel} • OpenAI (${data.provider_model || "gpt-4o-mini"})`;
+                ["activeModelBadge", "createModelBadge", "researchModelBadge"].forEach((id) => {
+                  const el = document.getElementById(id);
+                  if (el) el.textContent = openAiLabel;
+                });
               }
-              if (Array.isArray(data) && data[0] && data[0].generated_text) {
-                return data[0].generated_text.trim();
-              }
-              const customReply = data.response || data.reply || data.output || data.generated_text || data.text;
+              if (data.choices && data.choices[0] && data.choices[0].message) return data.choices[0].message.content.trim();
+              if (Array.isArray(data) && data[0] && data[0].generated_text) return data[0].generated_text.trim();
+              const customReply = data.reply || data.response || data.output || data.generated_text || data.text;
               if (customReply) return String(customReply).trim();
-            }
-          } catch (e) {}
-        }
-
-        const key = (state.apiKey || "").trim();
-        if (key.startsWith("AIza")) {
-          try {
-            const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(key)}`;
-            const res = await fetch(geminiUrl, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                contents: [{ parts: [{ text: `${systemInstruction}\nMode: ${category}\nUser: ${promptText}` }] }]
-              })
-            });
-            if (res.ok) {
-              const data = await res.json();
-              const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-              if (text) return text.trim();
-            }
-          } catch (e) {}
-        } else if (key.startsWith("sk-") || key.startsWith("gsk_")) {
-          try {
-            const endpoint = key.startsWith("gsk_")
-              ? "https://api.groq.com/openai/v1/chat/completions"
-              : "https://api.openai.com/v1/chat/completions";
-            const apiModel = key.startsWith("gsk_") ? "llama-3.3-70b-versatile" : "gpt-4o-mini";
-            const historyTurns = (sessionMessages || []).slice(-6).map((m) => ({
-              role: m.isUser ? "user" : "assistant",
-              content: m.text
-            }));
-            const messages = [
-              { role: "system", content: `${systemInstruction} Mode: ${category}` },
-              ...historyTurns,
-              { role: "user", content: promptText }
-            ];
-            const res = await fetch(endpoint, {
-              method: "POST",
-              headers: { "Content-Type": "application/json", "Authorization": `Bearer ${key}` },
-              body: JSON.stringify({ model: apiModel, messages, temperature: 0.7 })
-            });
-            if (res.ok) {
-              const data = await res.json();
-              const reply = data.choices?.[0]?.message?.content;
-              if (reply) return reply.trim();
+            } else if (res.status !== 404 && res.status !== 405) {
+              try {
+                const errData = await res.json();
+                if (errData && errData.detail) showToast(`FastAPI: ${errData.detail}`);
+              } catch (_) {}
             }
           } catch (e) {}
         }
@@ -1012,12 +1521,9 @@
       async function sendUserPromptToAi(promptText) {
         const clean = (promptText || "").trim();
         if (!clean) return;
-
         let session = getActiveSession();
         if (!session) session = createNewChatSession(state.activeCategory, clean);
-        if (session.title.startsWith("New ")) {
-          session.title = clean.length > 22 ? clean.slice(0, 22) + "..." : clean;
-        }
+        if (session.title.startsWith("New ")) session.title = clean.length > 22 ? clean.slice(0, 22) + "..." : clean;
         session.time = "Just now";
 
         const userSender = `You (${state.userName})`;
@@ -1029,6 +1535,9 @@
 
         const reply = await queryAiEngine(session.category, clean, session.messages);
         thinkingBody.textContent = reply;
+        const area = document.getElementById("chatMessagesArea");
+        area.scrollTop = area.scrollHeight;
+
         session.messages.push({ sender: `✦ ${modelLabel}`, text: reply, isUser: false });
         state.lastReply = reply;
 
@@ -1040,10 +1549,661 @@
         renderDashboard();
       }
 
+      async function sendCreatePromptToAi(promptText) {
+        const clean = (promptText || "").trim();
+        if (!clean) return;
+        let session = getActiveCreateSession();
+        if (!session) session = createNewCreateSession(state.activeCreateTool, clean);
+        if (session.title.startsWith("New ")) session.title = clean.length > 24 ? clean.slice(0, 24) + "..." : clean;
+        session.category = state.activeCreateTool || session.category;
+        session.time = "Just now";
+
+        const userSender = `You (${state.userName})`;
+        session.messages.push({ sender: userSender, text: clean, isUser: true });
+        appendBubbleToArea("createMessagesArea", userSender, clean, true);
+
+        const modelLabel = state.modelName || "Lumin-1.2";
+        const thinkingBody = appendBubbleToArea("createMessagesArea", `✦ ${modelLabel} (Create Studio)`, "Creating...", false);
+
+        const reply = await queryAiEngine(`Create - ${session.category}`, clean, session.messages);
+        thinkingBody.textContent = reply;
+        const area = document.getElementById("createMessagesArea");
+        area.scrollTop = area.scrollHeight;
+
+        session.messages.push({ sender: `✦ ${modelLabel} (Create Studio)`, text: reply, isUser: false });
+        state.lastCreateReply = reply;
+
+        state.createSessions = [session, ...state.createSessions.filter((s) => s.id !== session.id)];
+        state.stats.created += 1;
+        saveState();
+        renderCreateWorkspace();
+        renderDashboard();
+      }
+
+      async function sendResearchPromptToAi(promptText) {
+        const clean = (promptText || "").trim();
+        if (!clean) return;
+        let session = getActiveResearchSession();
+        if (!session) session = createNewResearchSession(state.activeResearchTool, clean);
+        if (session.title.startsWith("New ")) session.title = clean.length > 24 ? clean.slice(0, 24) + "..." : clean;
+        session.category = state.activeResearchTool || session.category;
+        session.time = "Just now";
+
+        const userSender = `You (${state.userName})`;
+        session.messages.push({ sender: userSender, text: clean, isUser: true });
+        appendBubbleToArea("researchMessagesArea", userSender, clean, true);
+
+        const modelLabel = state.modelName || "Lumin-1.2";
+        const thinkingBody = appendBubbleToArea("researchMessagesArea", `✦ ${modelLabel} (Research Lab)`, "Researching...", false);
+
+        const reply = await queryAiEngine(`Research - ${session.category}`, clean, session.messages);
+        thinkingBody.textContent = reply;
+        const area = document.getElementById("researchMessagesArea");
+        area.scrollTop = area.scrollHeight;
+
+        session.messages.push({ sender: `✦ ${modelLabel} (Research Lab)`, text: reply, isUser: false });
+        state.lastResearchReply = reply;
+
+        state.researchSessions = [session, ...state.researchSessions.filter((s) => s.id !== session.id)];
+        state.stats.chats += 1;
+        saveState();
+        renderResearchWorkspace();
+        renderDashboard();
+      }
+
+      // ================================================================
+      // DEDICATED TOOLS WORKSPACE (8 SPECIALIZED TOOLS + PDF EXTRACTOR)
+      // ================================================================
+      const TOOLS_CATALOG = [
+        {
+          id: "pdf-summarizer",
+          title: "PDF Summarizer",
+          category: "Document & Text",
+          badge: "PDF + AI",
+          desc: "Upload a PDF file to extract its text and generate structured summaries or study guides.",
+          subtitle: "Upload a real .pdf file (up to 10 MB) to extract text in-browser and summarize via your AI backend.",
+          iconSvg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+          primaryLabel: "Summary Style",
+          primaryOptions: ["Bullet Key Points", "Executive Summary", "Section-by-Section Breakdown", "Exam Study Guide & Key Terms"],
+          secondaryLabel: "Summary Length",
+          secondaryOptions: ["Concise (150-250 words)", "Standard (300-500 words)", "Detailed Comprehensive"],
+          textareaLabel: "Extracted PDF Text (Editable before summarizing)",
+          placeholder: "Upload a PDF file above to automatically extract its text here, or paste document text directly...",
+          sampleInput: "Document Title: Introduction to Operating Systems\nPage 1: An operating system (OS) is system software that manages computer hardware, software resources, and provides common services for computer programs. Key kernel responsibilities include process scheduling, virtual memory paging, file system management, and device I/O handling.",
+          hasPdfUpload: true,
+          hasSecondaryInput: false,
+          localActionLabel: null
+        },
+        {
+          id: "writing-grammar",
+          title: "Writing and Grammar Assistant",
+          category: "Document & Text",
+          badge: "Writing AI",
+          desc: "Check grammar, fix awkward phrasing, and polish essays, emails, or academic paragraphs.",
+          subtitle: "Proofread, fix grammar and spelling errors, and improve tone and clarity.",
+          iconSvg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>',
+          primaryLabel: "Improvement Mode",
+          primaryOptions: ["Fix Grammar, Spelling & Punctuation", "Academic & Formal Polish", "Improve Clarity & Conciseness", "Friendly & Professional Tone"],
+          secondaryLabel: "Output Detail",
+          secondaryOptions: ["Polished Text + List of Corrections", "Polished Text Only", "Detailed Line-by-Line Feedback"],
+          textareaLabel: "Draft Text to Check & Polish",
+          placeholder: "Paste your paragraph, essay, or email here to check grammar and improve writing...",
+          sampleInput: "Me and my team has builded a new study assistant web app yesterday, however their is still a few layout bugs that needs to be fix before we submitting the project.",
+          hasPdfUpload: false,
+          hasSecondaryInput: false,
+          localActionLabel: null
+        },
+        {
+          id: "code-debugger",
+          title: "Code Debugger",
+          category: "Coding & Data",
+          badge: "Code AI",
+          desc: "Find bugs, explain compiler or runtime errors, and get corrected code with explanations.",
+          subtitle: "Paste your source code and optional error message to diagnose bugs and generate fixed code.",
+          iconSvg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>',
+          primaryLabel: "Programming Language",
+          primaryOptions: ["Python", "C / C++", "JavaScript / TypeScript", "Java", "SQL", "HTML / CSS"],
+          secondaryLabel: "Debugging Mode",
+          secondaryOptions: ["Find Bugs & Provide Fixed Code", "Explain Error Stack Trace Step-by-Step", "Optimize Time & Space Complexity"],
+          textareaLabel: "Source Code to Debug",
+          placeholder: "Paste your code snippet or function here...",
+          sampleInput: "def calculate_average(numbers):\n    total = 0\n    for i in range(len(numbers) + 1):\n        total += numbers[i]\n    return total / len(numbers)",
+          sampleSecondary: "IndexError: list index out of range",
+          hasPdfUpload: false,
+          hasSecondaryInput: true,
+          localActionLabel: null
+        },
+        {
+          id: "language-translator",
+          title: "Language Translator",
+          category: "Document & Text",
+          badge: "Multi-Lang",
+          desc: "Translate text accurately between English, Bengali, Spanish, French, Arabic, Hindi, and more.",
+          subtitle: "Translate study materials, messages, or articles while preserving context and terminology.",
+          iconSvg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+          primaryLabel: "Source Language",
+          primaryOptions: ["Auto-Detect Language", "English", "Bengali (বাংলা)", "Spanish", "French", "Arabic", "Hindi", "German", "Japanese"],
+          secondaryLabel: "Target Language",
+          secondaryOptions: ["Bengali (বাংলা)", "English", "Spanish", "French", "Arabic", "Hindi", "German", "Japanese"],
+          textareaLabel: "Text to Translate",
+          placeholder: "Enter text in any language to translate...",
+          sampleInput: "Artificial intelligence helps students learn complex subjects faster by breaking problems down into clear, manageable steps.",
+          hasPdfUpload: false,
+          hasSecondaryInput: false,
+          localActionLabel: null
+        },
+        {
+          id: "text-summarizer",
+          title: "Text Summarizer",
+          category: "Document & Text",
+          badge: "Summary AI",
+          desc: "Condense long articles, lecture notes, or chapters into concise bullet points or paragraphs.",
+          subtitle: "Paste any long article, lecture transcript, or chapter to extract the core takeaways.",
+          iconSvg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="21" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="14" y1="18" x2="3" y2="18"/></svg>',
+          primaryLabel: "Output Format",
+          primaryOptions: ["Key Bullet Points", "Executive Paragraph Summary", "Actionable Takeaways & Definitions", "One-Page Exam Revision Sheet"],
+          secondaryLabel: "Summary Length",
+          secondaryOptions: ["Short (3-5 key points)", "Medium (Balanced overview)", "Detailed (Thorough breakdown)"],
+          textareaLabel: "Long Text / Article to Summarize",
+          placeholder: "Paste your article, lecture notes, or chapter text here...",
+          sampleInput: "Photosynthesis is the biochemical process in which green plants, algae, and certain bacteria convert light energy into chemical energy. Takes place within chloroplasts containing chlorophyll. It consists of two main stages: the light-dependent reactions in the thylakoid membranes (producing ATP and NADPH while splitting water to release oxygen) and the light-independent Calvin cycle in the stroma (fixing carbon dioxide into glucose).",
+          hasPdfUpload: false,
+          hasSecondaryInput: false,
+          localActionLabel: null
+        },
+        {
+          id: "quiz-flashcards",
+          title: "Quiz and Flashcard Generator",
+          category: "Study & Math",
+          badge: "Study AI",
+          desc: "Turn any topic or study notes into multiple-choice quizzes with answer keys or Q&A flashcards.",
+          subtitle: "Generate active-recall practice quizzes and flashcards from your course topics or notes.",
+          iconSvg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+          primaryLabel: "Generation Format",
+          primaryOptions: ["Multiple-Choice Quiz (with Answer Key)", "Q&A Study Flashcards (Front / Back)", "Short-Answer Exam Questions & Model Answers", "True / False Concept Check"],
+          secondaryLabel: "Count & Difficulty",
+          secondaryOptions: ["5 Items • Medium Difficulty", "5 Items • Hard (Exam Level)", "10 Items • Mixed Difficulty", "5 Items • Easy (Beginner)"],
+          textareaLabel: "Topic or Study Notes",
+          placeholder: "Enter a subject (e.g., Data Structures: Binary Trees) or paste your class notes...",
+          sampleInput: "Data Structures: Binary Search Trees (BST), AVL Trees, time complexity of search/insert/delete operations, and tree traversals (Inorder, Preorder, Postorder).",
+          hasPdfUpload: false,
+          hasSecondaryInput: false,
+          localActionLabel: null
+        },
+        {
+          id: "text-converter",
+          title: "Text-to-JSON/Markdown Converter",
+          category: "Coding & Data",
+          badge: "Local + AI",
+          desc: "Convert raw notes, lists, or key-value text into valid JSON or formatted Markdown tables.",
+          subtitle: "Use Instant Local Convert for immediate deterministic formatting or Run Tool for AI smart structuring.",
+          iconSvg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>',
+          primaryLabel: "Target Format",
+          primaryOptions: ["Structured JSON Object", "Clean Markdown Document", "Markdown Comparison Table", "JSON Array of Records"],
+          secondaryLabel: "Formatting Style",
+          secondaryOptions: ["Pretty-Printed (2-Space Indent)", "Compact / Minified", "Include Metadata Wrapper"],
+          textareaLabel: "Raw Text / Key-Value Lines / List",
+          placeholder: "Enter key: value pairs, bullet lists, or unstructured text to convert...",
+          sampleInput: "Course: Data Structures and Algorithms\nCode: CSE-201\nCredits: 3.0\nTopics: Arrays, Linked Lists, Stacks, Queues, Trees, Graphs\nExam Date: November 15",
+          hasPdfUpload: false,
+          hasSecondaryInput: false,
+          localActionLabel: "Instant Local Convert"
+        },
+        {
+          id: "math-helper",
+          title: "Math and Formula Helper",
+          category: "Study & Math",
+          badge: "Math + AI",
+          desc: "Solve equations step by step, derive formulas, or evaluate numerical expressions.",
+          subtitle: "Use Instant Local Evaluate for arithmetic/scientific expressions or Run Tool for step-by-step AI proofs.",
+          iconSvg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/><line x1="4" y1="12" x2="20" y2="12"/></svg>',
+          primaryLabel: "Solution Mode",
+          primaryOptions: ["Step-by-Step Problem Solution", "Formula Sheet & Derivation", "Verify Answer & Show Checks", "Explain Intuition Simply"],
+          secondaryLabel: "Math Branch",
+          secondaryOptions: ["Algebra & Calculus", "Physics & Kinematics", "Discrete Math & Probability", "Linear Algebra & Geometry"],
+          textareaLabel: "Math Problem, Equation, or Expression",
+          placeholder: "Enter an equation (e.g., Solve 2x^2 - 7x + 3 = 0) or numerical expression (e.g., sqrt(144) + 5^2)...",
+          sampleInput: "Solve the quadratic equation 2x^2 - 7x + 3 = 0 step by step and verify both roots.",
+          hasPdfUpload: false,
+          hasSecondaryInput: false,
+          localActionLabel: "Instant Local Evaluate"
+        }
+      ];
+
+      let toolsUiState = {
+        searchQuery: "",
+        selectedCategory: "All",
+        activeToolId: "pdf-summarizer",
+        lastToolOutput: "",
+        isRunning: false
+      };
+
+      function showToolError(msg) {
+        const banner = document.getElementById("toolErrorBanner");
+        if (!msg) {
+          banner.textContent = "";
+          banner.classList.remove("show");
+          return;
+        }
+        banner.textContent = msg;
+        banner.classList.add("show");
+      }
+
+      function setToolLoading(isLoading, statusMsg) {
+        toolsUiState.isRunning = isLoading;
+        const loader = document.getElementById("toolLoadingState");
+        const runBtn = document.getElementById("btnRunActiveTool");
+        if (isLoading) {
+          document.getElementById("toolLoadingText").textContent = statusMsg || `Processing with ${state.modelName || "Lumin-1.2"}...`;
+          loader.classList.add("show");
+          runBtn.disabled = true;
+          runBtn.style.opacity = "0.65";
+        } else {
+          loader.classList.remove("show");
+          runBtn.disabled = false;
+          runBtn.style.opacity = "1";
+        }
+      }
+
+      function updateToolInputStats() {
+        const val = (document.getElementById("toolPrimaryTextarea").value || "").trim();
+        const chars = val.length;
+        const words = val ? val.split(/\s+/).length : 0;
+        document.getElementById("toolInputStats").textContent = `${words} words • ${chars} chars`;
+      }
+
+      function renderToolsDashboardGrid() {
+        const grid = document.getElementById("toolsDashboardGrid");
+        grid.innerHTML = "";
+        const q = (toolsUiState.searchQuery || "").trim().toLowerCase();
+        const cat = toolsUiState.selectedCategory || "All";
+
+        const filtered = TOOLS_CATALOG.filter((t) => {
+          const matchesCat = cat === "All" || t.category === cat;
+          const matchesQuery =
+            !q ||
+            t.title.toLowerCase().includes(q) ||
+            t.desc.toLowerCase().includes(q) ||
+            t.category.toLowerCase().includes(q) ||
+            t.badge.toLowerCase().includes(q);
+          return matchesCat && matchesQuery;
+        });
+
+        if (filtered.length === 0) {
+          const empty = document.createElement("div");
+          empty.className = "tool-panel-card";
+          empty.style.gridColumn = "1 / -1";
+          empty.style.textAlign = "center";
+          empty.innerHTML = `
+            <div style="font-size:15px; font-weight:700; color:var(--text-primary)">No matching tools found</div>
+            <div class="form-hint">Try clearing your search filter or selecting "All Tools (8)".</div>
+          `;
+          grid.appendChild(empty);
+          return;
+        }
+
+        filtered.forEach((tool) => {
+          const card = document.createElement("button");
+          card.type = "button";
+          card.className = "tool-dash-card";
+          card.setAttribute("data-tool-card-id", tool.id);
+          card.innerHTML = `
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px">
+                <div class="card-icon-box" style="margin-bottom:0">${tool.iconSvg}</div>
+                <span class="tool-card-badge">${tool.badge}</span>
+              </div>
+              <div class="card-title" style="font-size:15px; margin-bottom:6px">${tool.title}</div>
+              <div class="card-desc" style="padding-right:0; font-size:12px">${tool.desc}</div>
+            </div>
+            <div class="tool-card-footer">
+              <span>${tool.category}</span>
+              <span>Open Tool &rarr;</span>
+            </div>
+          `;
+          card.addEventListener("click", () => openSpecificToolWorkspace(tool.id));
+          grid.appendChild(card);
+        });
+      }
+
+      function openToolsWorkspace() {
+        closeAllWorkspaces();
+        setActiveSidebarNav("Tools");
+        renderDashboard();
+        renderToolsDashboardGrid();
+        document.getElementById("toolsDashboardView").style.display = "flex";
+        document.getElementById("activeToolWorkspaceView").style.display = "none";
+        document.getElementById("btnToolsBackToGridTop").style.display = "none";
+        document.getElementById("toolsWorkspaceBackdrop").classList.add("open");
+      }
+
+      function openSpecificToolWorkspace(toolId) {
+        const tool = TOOLS_CATALOG.find((t) => t.id === toolId) || TOOLS_CATALOG[0];
+        toolsUiState.activeToolId = tool.id;
+        showToolError("");
+        setToolLoading(false);
+
+        document.getElementById("toolsDashboardView").style.display = "none";
+        document.getElementById("activeToolWorkspaceView").style.display = "flex";
+        document.getElementById("btnToolsBackToGridTop").style.display = "inline-flex";
+
+        document.getElementById("activeToolTitle").textContent = tool.title;
+        document.getElementById("activeToolSubtitle").textContent = tool.subtitle;
+        document.getElementById("labelOptionPrimary").textContent = tool.primaryLabel;
+        document.getElementById("labelOptionSecondary").textContent = tool.secondaryLabel;
+        document.getElementById("labelPrimaryTextarea").textContent = tool.textareaLabel;
+
+        const selPrimary = document.getElementById("toolOptionPrimary");
+        selPrimary.innerHTML = "";
+        tool.primaryOptions.forEach((opt) => {
+          const o = document.createElement("option");
+          o.value = opt;
+          o.textContent = opt;
+          selPrimary.appendChild(o);
+        });
+
+        const selSecondary = document.getElementById("toolOptionSecondary");
+        selSecondary.innerHTML = "";
+        tool.secondaryOptions.forEach((opt) => {
+          const o = document.createElement("option");
+          o.value = opt;
+          o.textContent = opt;
+          selSecondary.appendChild(o);
+        });
+
+        document.getElementById("pdfUploadSection").style.display = tool.hasPdfUpload ? "flex" : "none";
+        if (tool.hasPdfUpload) {
+          document.getElementById("pdfDropzoneTitle").innerHTML = "&#128196; Click to Select a PDF File (.pdf up to 10 MB)";
+          document.getElementById("pdfDropzoneMeta").textContent = "Extracts real text from your PDF in the browser using PDF.js + binary stream parser.";
+        }
+
+        document.getElementById("groupSecondaryInput").style.display = tool.hasSecondaryInput ? "flex" : "none";
+        document.getElementById("toolSecondaryInput").value = "";
+
+        const ta = document.getElementById("toolPrimaryTextarea");
+        ta.value = "";
+        ta.placeholder = tool.placeholder;
+        updateToolInputStats();
+
+        const localBtn = document.getElementById("btnLocalToolAction");
+        if (tool.localActionLabel) {
+          localBtn.style.display = "inline-flex";
+          localBtn.textContent = tool.localActionLabel;
+        } else {
+          localBtn.style.display = "none";
+        }
+
+        document.getElementById("toolResultMetaBadge").textContent = "Ready";
+        document.getElementById("toolResultOutput").textContent = `Configure ${tool.title} options on the left and click "Run Tool" (or "Load Sample Input" to test).`;
+        toolsUiState.lastToolOutput = "";
+      }
+
+      async function extractTextFromPdfFile(file) {
+        const arrayBuffer = await file.arrayBuffer();
+        const headerBytes = new Uint8Array(arrayBuffer.slice(0, 5));
+        const headerStr = String.fromCharCode(...headerBytes);
+        if (!headerStr.startsWith("%PDF-")) {
+          throw new Error("Invalid PDF file structure: File does not start with a valid %PDF- header.");
+        }
+
+        if (window.pdfjsLib && typeof window.pdfjsLib.getDocument === "function") {
+          try {
+            window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+              "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+            const loadingTask = window.pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer) });
+            const pdfDoc = await loadingTask.promise;
+            const numPages = pdfDoc.numPages;
+            const pageTexts = [];
+            for (let pageNum = 1; pageNum <= numPages; pageNum++) {
+              const page = await pdfDoc.getPage(pageNum);
+              const content = await page.getTextContent();
+              const strings = content.items.map((item) => item.str || "");
+              const pageStr = strings.join(" ").replace(/\s+/g, " ").trim();
+              if (pageStr) pageTexts.push(`[Page ${pageNum}]\n${pageStr}`);
+            }
+            const combined = pageTexts.join("\n\n").trim();
+            if (combined) return { text: combined, pages: numPages, engine: "PDF.js" };
+          } catch (_) {}
+        }
+
+        const decoder = new TextDecoder("latin1");
+        const rawPdf = decoder.decode(new Uint8Array(arrayBuffer));
+        const pageMatches = rawPdf.match(/\/Type\s*\/Page\b/g);
+        const estimatedPages = pageMatches ? pageMatches.length : 1;
+
+        function decodePdfLiteralString(s) {
+          return s
+            .replace(/\\n/g, "\n")
+            .replace(/\\r/g, "\r")
+            .replace(/\\t/g, " ")
+            .replace(/\\\(/g, "(")
+            .replace(/\\\)/g, ")")
+            .replace(/\\\\/g, "\\");
+        }
+
+        function extractTextOperators(chunk) {
+          const out = [];
+          const tjRegex = /\((?:\\.|[^\\()])*\)\s*Tj/g;
+          let m;
+          while ((m = tjRegex.exec(chunk)) !== null) {
+            const inner = m[0].replace(/\)\s*Tj$/, "").slice(1);
+            const cleaned = decodePdfLiteralString(inner).trim();
+            if (cleaned) out.push(cleaned);
+          }
+          const tjArrayRegex = /\[((?:.|\n|\r)*?)\]\s*TJ/g;
+          while ((m = tjArrayRegex.exec(chunk)) !== null) {
+            const arrContent = m[1];
+            const strRegex = /\((?:\\.|[^\\()])*\)/g;
+            let sm;
+            const parts = [];
+            while ((sm = strRegex.exec(arrContent)) !== null) {
+              parts.push(decodePdfLiteralString(sm[0].slice(1, -1)));
+            }
+            if (parts.length) out.push(parts.join(""));
+          }
+          return out.join(" ");
+        }
+
+        const extractedChunks = [];
+        const directText = extractTextOperators(rawPdf);
+        if (directText.trim()) extractedChunks.push(directText.trim());
+
+        if (typeof DecompressionStream !== "undefined") {
+          const streamRegex = /stream\r?\n([\s\S]*?)\r?\nendstream/g;
+          let sm;
+          while ((sm = streamRegex.exec(rawPdf)) !== null) {
+            const bodyLatin1 = sm[1];
+            const bytes = new Uint8Array(bodyLatin1.length);
+            for (let i = 0; i < bodyLatin1.length; i++) bytes[i] = bodyLatin1.charCodeAt(i) & 0xff;
+            try {
+              const ds = new DecompressionStream("deflate");
+              const writer = ds.writable.getWriter();
+              writer.write(bytes);
+              writer.close();
+              const decompressedBuf = await new Response(ds.readable).arrayBuffer();
+              const decompressedStr = new TextDecoder("latin1").decode(decompressedBuf);
+              const t = extractTextOperators(decompressedStr).trim();
+              if (t) extractedChunks.push(t);
+            } catch (_) {}
+          }
+        }
+
+        const finalFallbackText = extractedChunks.join("\n\n").replace(/\s+/g, " ").trim();
+        return { text: finalFallbackText, pages: estimatedPages, engine: "Native PDF Parser" };
+      }
+
+      function runLocalTextConversion(rawText, targetFormat, styleOption) {
+        const lines = rawText.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+        const kvPairs = {};
+        const listItems = [];
+        lines.forEach((line, idx) => {
+          const kvMatch = line.match(/^([^:=-]{1,50})\s*[:=]\s*(.+)$/);
+          if (kvMatch) {
+            const key = kvMatch[1].trim();
+            const val = kvMatch[2].trim();
+            kvPairs[key] = val.includes(",") ? val.split(",").map((s) => s.trim()).filter(Boolean) : val;
+          } else {
+            listItems.push({ lineNumber: idx + 1, content: line.replace(/^[-*•]\s*/, "") });
+          }
+        });
+
+        const indent = styleOption.includes("Compact") ? 0 : 2;
+        if (targetFormat.includes("JSON Array")) {
+          const records = lines.map((line, i) => {
+            const kvMatch = line.match(/^([^:=-]{1,50})\s*[:=]\s*(.+)$/);
+            return kvMatch
+              ? { index: i + 1, key: kvMatch[1].trim(), value: kvMatch[2].trim() }
+              : { index: i + 1, text: line.replace(/^[-*•]\s*/, "") };
+          });
+          return JSON.stringify(records, null, indent);
+        }
+        if (targetFormat.includes("JSON")) {
+          const payload = Object.keys(kvPairs).length ? { ...kvPairs } : {};
+          if (listItems.length) payload.items = listItems.map((i) => i.content);
+          if (styleOption.includes("Metadata")) {
+            return JSON.stringify({ generatedBy: "Luminaries Text-to-JSON Converter", lineCount: lines.length, data: payload }, null, indent);
+          }
+          return JSON.stringify(payload, null, indent);
+        }
+        if (targetFormat.includes("Table")) {
+          const rows = ["| Field / Item # | Value / Content |", "| :--- | :--- |"];
+          lines.forEach((line, i) => {
+            const kvMatch = line.match(/^([^:=-]{1,50})\s*[:=]\s*(.+)$/);
+            if (kvMatch) rows.push(`| **${kvMatch[1].trim()}** | ${kvMatch[2].trim()} |`);
+            else rows.push(`| Item ${i + 1} | ${line.replace(/^[-*•]\s*/, "")} |`);
+          });
+          return rows.join("\n");
+        }
+        const md = ["# Structured Document Notes", ""];
+        if (Object.keys(kvPairs).length) {
+          md.push("## Key Properties");
+          Object.entries(kvPairs).forEach(([k, v]) => md.push(`- **${k}**: ${Array.isArray(v) ? v.join(", ") : v}`));
+          md.push("");
+        }
+        if (listItems.length) {
+          md.push("## Items & Notes");
+          listItems.forEach((item) => md.push(`- ${item.content}`));
+        }
+        return md.join("\n");
+      }
+
+      function runLocalMathEvaluation(rawInput) {
+        const cleaned = rawInput.trim();
+        const quadMatch = cleaned.replace(/\s+/g, "").match(/^([+-]?\d*\.?\d*)x\^2([+-]\d*\.?\d*)x([+-]\d+\.?\d*)=0$/i);
+        if (quadMatch) {
+          const parseCoeff = (s) => (s === "" || s === "+" ? 1 : s === "-" ? -1 : parseFloat(s));
+          const a = parseCoeff(quadMatch[1]);
+          const b = parseCoeff(quadMatch[2]);
+          const c = parseFloat(quadMatch[3]);
+          const disc = b * b - 4 * a * c;
+          let out = `Quadratic Equation Local Solver:\nEquation: ${a}x² ${b >= 0 ? "+ " + b : "- " + Math.abs(b)}x ${c >= 0 ? "+ " + c : "- " + Math.abs(c)} = 0\n\n`;
+          out += `1. Coefficients: a = ${a}, b = ${b}, c = ${c}\n`;
+          out += `2. Discriminant (Δ = b² - 4ac): (${b})² - 4(${a})(${c}) = ${disc}\n`;
+          if (disc >= 0) {
+            const r1 = (-b + Math.sqrt(disc)) / (2 * a);
+            const r2 = (-b - Math.sqrt(disc)) / (2 * a);
+            out += `3. Real Roots:\n   • x₁ = (-b + √Δ) / (2a) = ${r1}\n   • x₂ = (-b - √Δ) / (2a) = ${r2}`;
+          } else {
+            const realPart = (-b / (2 * a)).toFixed(4);
+            const imagPart = (Math.sqrt(-disc) / (2 * a)).toFixed(4);
+            out += `3. Complex Roots:\n   • x₁ = ${realPart} + ${imagPart}i\n   • x₂ = ${realPart} - ${imagPart}i`;
+          }
+          return out;
+        }
+
+        const expr = cleaned
+          .replace(/\^/g, "**")
+          .replace(/\bsqrt\s*\(/gi, "Math.sqrt(")
+          .replace(/\bsin\s*\(/gi, "Math.sin(")
+          .replace(/\bcos\s*\(/gi, "Math.cos(")
+          .replace(/\btan\s*\(/gi, "Math.tan(")
+          .replace(/\blog\s*\(/gi, "Math.log10(")
+          .replace(/\bln\s*\(/gi, "Math.log(")
+          .replace(/\bpi\b/gi, "Math.PI");
+
+        if (!/^[0-9+\-*/().\s,*MathsqrtincoalgPIE]+$/.test(expr)) {
+          throw new Error(
+            "Instant Local Evaluate supports numerical expressions (e.g., sqrt(144) + 5^2) or standard quadratic equations (e.g., 2x^2 - 7x + 3 = 0). Click 'Run Tool →' for full AI step-by-step word problem solving."
+          );
+        }
+        const result = Function(`"use strict"; return (${expr});`)();
+        if (typeof result !== "number" || !Number.isFinite(result)) {
+          throw new Error("Expression did not evaluate to a finite number.");
+        }
+        return `Instant Local Math Evaluation:\n• Input Expression: ${cleaned}\n• Exact Result: ${result}`;
+      }
+
+      async function runToolAiBackendRequest(tool, primaryOpt, secondaryOpt, inputText, secondaryInputText) {
+        const modelLabel = state.modelName || "Lumin-1.2";
+        let structuredPrompt = `Tool: ${tool.title}\nSelected Mode: ${primaryOpt}\nOption/Target: ${secondaryOpt}\n`;
+        if (secondaryInputText) structuredPrompt += `Error / Context: ${secondaryInputText}\n`;
+        structuredPrompt += `\nInput Content:\n${inputText}`;
+
+        const systemInstruction = `You are ${modelLabel}, powering the "${tool.title}" utility inside Luminaries AI. Follow the requested mode (${primaryOpt}) and option (${secondaryOpt}) accurately and return a clean, well-structured response.`;
+
+        const backendUrl = normalizeBackendChatUrl(state.customEndpoint);
+        let explicitBackendError = null;
+        if (backendUrl) {
+          try {
+            const headers = { "Content-Type": "application/json" };
+            if (ephemeralBackendToken.trim() !== "") headers["X-Client-Passcode"] = ephemeralBackendToken.trim();
+            const res = await fetch(backendUrl, {
+              method: "POST",
+              headers,
+              body: JSON.stringify({
+                model: modelLabel,
+                category: `Tool: ${tool.title}`,
+                prompt: structuredPrompt,
+                message: structuredPrompt,
+                messages: [{ role: "user", content: structuredPrompt }]
+              })
+            });
+            if (res.ok) {
+              const data = await res.json();
+              const reply =
+                data.choices?.[0]?.message?.content ||
+                (Array.isArray(data) && data[0]?.generated_text) ||
+                data.reply ||
+                data.response ||
+                data.output ||
+                data.text;
+              if (reply && String(reply).trim()) {
+                return {
+                  output: String(reply).trim(),
+                  sourceLabel: data.provider === "openai" ? `OpenAI (${data.provider_model || "gpt-4o-mini"})` : "FastAPI Backend"
+                };
+              }
+            } else if (res.status !== 404 && res.status !== 405) {
+              try {
+                const errJson = await res.json();
+                explicitBackendError = errJson.detail || `Backend returned HTTP ${res.status}`;
+              } catch (_) {
+                explicitBackendError = `Backend returned HTTP ${res.status}`;
+              }
+            }
+          } catch (_) {}
+        }
+
+        if (explicitBackendError) throw new Error(explicitBackendError);
+
+        try {
+          const fullQuery = `${systemInstruction}\n\n${structuredPrompt}`;
+          const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(fullQuery)}`);
+          if (res.ok) {
+            const text = (await res.text()).trim();
+            if (text) return { output: text, sourceLabel: `${modelLabel} Cloud AI` };
+          }
+        } catch (_) {}
+
+        throw new Error(
+          "Could not reach the AI backend service. Please verify your FastAPI Backend URL in Settings or check your internet connection."
+        );
+      }
+
       function openSettingsModal() {
         document.getElementById("inputModelName").value = state.modelName || "Lumin-1.2";
-        document.getElementById("inputApiKey").value = state.apiKey || "";
-        document.getElementById("inputCustomEndpoint").value = state.customEndpoint || "";
+        document.getElementById("inputCustomEndpoint").value = state.customEndpoint || "/api/chat";
+        document.getElementById("inputSessionToken").value = ephemeralBackendToken || "";
         document.getElementById("inputUserName").value = state.userName || "Yafrah";
         document.getElementById("settingsModalBackdrop").classList.add("open");
       }
@@ -1056,21 +2216,27 @@
         const navButtons = document.querySelectorAll(".nav-item[data-nav]");
         navButtons.forEach((btn) => {
           btn.addEventListener("click", () => {
-            navButtons.forEach((b) => b.classList.remove("active"));
-            btn.classList.add("active");
             const target = btn.getAttribute("data-nav");
+            if (target === "Settings") { openSettingsModal(); return; }
+            if (target === "Files") { document.getElementById("hiddenFileInput").click(); return; }
+            setActiveSidebarNav(target);
             if (target === "Home") {
-              document.getElementById("chatModalBackdrop").classList.remove("open");
+              closeAllWorkspaces();
               renderDashboard();
-            } else if (target === "Settings") {
-              openSettingsModal();
-            } else if (target === "Files") {
-              document.getElementById("hiddenFileInput").click();
+              window.scrollTo({ top: 0, behavior: "smooth" });
             } else if (target === "Chat" || target === "Library") {
               openChatModalForSession(state.activeSessionId);
+              setActiveSidebarNav(target);
+            } else if (target === "Create") {
+              openCreateWorkspace(state.activeCreateSessionId);
+            } else if (target === "Research") {
+              openResearchWorkspace(state.activeResearchSessionId);
+            } else if (target === "Tools") {
+              openToolsWorkspace();
             } else {
               const s = createNewChatSession(target, null);
               openChatModalForSession(s.id);
+              setActiveSidebarNav(target);
             }
           });
         });
@@ -1079,10 +2245,7 @@
         chipButtons.forEach((chip) => {
           chip.addEventListener("click", () => {
             const chipType = chip.getAttribute("data-chip");
-            if (chipType === "Upload File") {
-              document.getElementById("hiddenFileInput").click();
-              return;
-            }
+            if (chipType === "Upload File") { document.getElementById("hiddenFileInput").click(); return; }
             chipButtons.forEach((c) => c.classList.remove("active"));
             chip.classList.add("active");
             state.activeCategory = chipType;
@@ -1095,15 +2258,17 @@
         const mainInput = document.getElementById("mainPromptInput");
         const submitMainPrompt = () => {
           const val = mainInput.value.trim();
-          if (!val) {
-            showToast("Type a prompt or question first!");
-            mainInput.focus();
-            return;
-          }
+          if (!val) { showToast("Type a prompt or question first!"); mainInput.focus(); return; }
           mainInput.value = "";
-          const newSession = createNewChatSession(state.activeCategory, val);
-          openChatModalForSession(newSession.id);
-          sendUserPromptToAi(val);
+          if (state.activeCategory === "Research") {
+            const rSession = createNewResearchSession(state.activeResearchTool, val);
+            openResearchWorkspace(rSession.id);
+            sendResearchPromptToAi(val);
+          } else {
+            const newSession = createNewChatSession(state.activeCategory, val);
+            openChatModalForSession(newSession.id);
+            sendUserPromptToAi(val);
+          }
         };
 
         document.getElementById("btnMainSend").addEventListener("click", submitMainPrompt);
@@ -1112,8 +2277,15 @@
         document.querySelectorAll(".explore-card[data-card]").forEach((card) => {
           card.addEventListener("click", () => {
             const category = card.getAttribute("data-card");
-            const newSession = createNewChatSession(category, null);
-            openChatModalForSession(newSession.id);
+            if (category === "Research") {
+              openResearchWorkspace(state.activeResearchSessionId);
+            } else if (category === "Writing" || category === "Creativity") {
+              state.activeCreateTool = category === "Writing" ? "Essay & Story" : "Project Outline";
+              openCreateWorkspace(state.activeCreateSessionId);
+            } else {
+              const newSession = createNewChatSession(category, null);
+              openChatModalForSession(newSession.id);
+            }
           });
         });
 
@@ -1123,6 +2295,247 @@
           const s = createNewChatSession(state.activeCategory, null);
           openChatModalForSession(s.id);
           showToast("Started a new chat session!");
+        });
+
+        document.querySelectorAll("#createToolsBar .workspace-tool-pill").forEach((pill) => {
+          pill.addEventListener("click", () => {
+            state.activeCreateTool = pill.getAttribute("data-create-tool");
+            saveState();
+            renderCreateWorkspace();
+            document.getElementById("createModalInput").focus();
+          });
+        });
+        document.getElementById("btnStartNewCreateSession").addEventListener("click", () => {
+          const s = createNewCreateSession(state.activeCreateTool, null);
+          openCreateWorkspace(s.id);
+          showToast("Started a new Create session!");
+        });
+        const createModalInput = document.getElementById("createModalInput");
+        const sendFromCreate = () => {
+          const q = createModalInput.value.trim();
+          if (!q) return;
+          createModalInput.value = "";
+          sendCreatePromptToAi(q);
+        };
+        document.getElementById("btnCreateSend").addEventListener("click", sendFromCreate);
+        createModalInput.addEventListener("keydown", (e) => { if (e.key === "Enter") sendFromCreate(); });
+        const closeCreateWorkspace = () => {
+          document.getElementById("createWorkspaceBackdrop").classList.remove("open");
+          setActiveSidebarNav("Home");
+        };
+        document.getElementById("btnCloseCreateModal").addEventListener("click", closeCreateWorkspace);
+        document.getElementById("btnBackToHomeCreateRail").addEventListener("click", closeCreateWorkspace);
+        document.getElementById("btnCopyCreateReply").addEventListener("click", () => copyTextToClipboard(state.lastCreateReply));
+
+        document.querySelectorAll("#researchToolsBar .workspace-tool-pill").forEach((pill) => {
+          pill.addEventListener("click", () => {
+            state.activeResearchTool = pill.getAttribute("data-research-tool");
+            saveState();
+            renderResearchWorkspace();
+            document.getElementById("researchModalInput").focus();
+          });
+        });
+        document.getElementById("btnStartNewResearchSession").addEventListener("click", () => {
+          const s = createNewResearchSession(state.activeResearchTool, null);
+          openResearchWorkspace(s.id);
+          showToast("Started a new Research session!");
+        });
+        const researchModalInput = document.getElementById("researchModalInput");
+        const sendFromResearch = () => {
+          const q = researchModalInput.value.trim();
+          if (!q) return;
+          researchModalInput.value = "";
+          sendResearchPromptToAi(q);
+        };
+        document.getElementById("btnResearchSend").addEventListener("click", sendFromResearch);
+        researchModalInput.addEventListener("keydown", (e) => { if (e.key === "Enter") sendFromResearch(); });
+        const closeResearchWorkspace = () => {
+          document.getElementById("researchWorkspaceBackdrop").classList.remove("open");
+          setActiveSidebarNav("Home");
+        };
+        document.getElementById("btnCloseResearchModal").addEventListener("click", closeResearchWorkspace);
+        document.getElementById("btnBackToHomeResearchRail").addEventListener("click", closeResearchWorkspace);
+        document.getElementById("btnCopyResearchReply").addEventListener("click", () => copyTextToClipboard(state.lastResearchReply));
+
+        const closeToolsWorkspace = () => {
+          document.getElementById("toolsWorkspaceBackdrop").classList.remove("open");
+          setActiveSidebarNav("Home");
+        };
+        document.getElementById("btnCloseToolsModal").addEventListener("click", closeToolsWorkspace);
+
+        const backToToolsGrid = () => {
+          showToolError("");
+          setToolLoading(false);
+          document.getElementById("activeToolWorkspaceView").style.display = "none";
+          document.getElementById("toolsDashboardView").style.display = "flex";
+          document.getElementById("btnToolsBackToGridTop").style.display = "none";
+        };
+        document.getElementById("btnBackToToolsGrid").addEventListener("click", backToToolsGrid);
+        document.getElementById("btnToolsBackToGridTop").addEventListener("click", backToToolsGrid);
+
+        document.getElementById("toolsSearchInput").addEventListener("input", (e) => {
+          toolsUiState.searchQuery = e.target.value;
+          renderToolsDashboardGrid();
+        });
+
+        document.querySelectorAll("#toolsCategoryFilterBar .workspace-tool-pill").forEach((pill) => {
+          pill.addEventListener("click", () => {
+            document.querySelectorAll("#toolsCategoryFilterBar .workspace-tool-pill").forEach((p) => p.classList.remove("active"));
+            pill.classList.add("active");
+            toolsUiState.selectedCategory = pill.getAttribute("data-tool-cat") || "All";
+            renderToolsDashboardGrid();
+          });
+        });
+
+        document.getElementById("toolPrimaryTextarea").addEventListener("input", updateToolInputStats);
+
+        document.getElementById("btnLoadToolSample").addEventListener("click", () => {
+          const tool = TOOLS_CATALOG.find((t) => t.id === toolsUiState.activeToolId) || TOOLS_CATALOG[0];
+          showToolError("");
+          document.getElementById("toolPrimaryTextarea").value = tool.sampleInput || "";
+          if (tool.hasSecondaryInput) document.getElementById("toolSecondaryInput").value = tool.sampleSecondary || "";
+          updateToolInputStats();
+          showToast(`Loaded sample input for ${tool.title}`);
+        });
+
+        document.getElementById("btnClearToolWorkspace").addEventListener("click", () => {
+          showToolError("");
+          document.getElementById("toolPrimaryTextarea").value = "";
+          document.getElementById("toolSecondaryInput").value = "";
+          document.getElementById("toolResultOutput").textContent = "Cleared. Enter new input on the left and click Run Tool.";
+          document.getElementById("toolResultMetaBadge").textContent = "Ready";
+          toolsUiState.lastToolOutput = "";
+          updateToolInputStats();
+        });
+
+        document.getElementById("btnCopyToolOutput").addEventListener("click", () => {
+          if (!toolsUiState.lastToolOutput) { showToast("No tool output to copy yet!"); return; }
+          copyTextToClipboard(toolsUiState.lastToolOutput);
+        });
+
+        const pdfDropzoneBox = document.getElementById("pdfDropzoneBox");
+        const pdfToolFileInput = document.getElementById("pdfToolFileInput");
+        pdfDropzoneBox.addEventListener("click", () => pdfToolFileInput.click());
+
+        pdfToolFileInput.addEventListener("change", async (e) => {
+          const file = e.target.files && e.target.files[0];
+          e.target.value = "";
+          if (!file) return;
+
+          showToolError("");
+          const maxBytes = 10 * 1024 * 1024;
+          const isPdfExt = file.name.toLowerCase().endsWith(".pdf");
+          const isPdfMime = !file.type || file.type === "application/pdf";
+
+          if (!isPdfExt || !isPdfMime) {
+            showToolError(`Invalid file type ("${file.name}"). Please upload a valid .pdf document.`);
+            return;
+          }
+          if (file.size === 0) {
+            showToolError(`The selected PDF ("${file.name}") is empty (0 bytes).`);
+            return;
+          }
+          if (file.size > maxBytes) {
+            const sizeMb = (file.size / (1024 * 1024)).toFixed(2);
+            showToolError(`File too large (${sizeMb} MB). Maximum supported PDF size is 10 MB.`);
+            return;
+          }
+
+          setToolLoading(true, `Extracting text from "${file.name}"...`);
+          try {
+            const result = await extractTextFromPdfFile(file);
+            setToolLoading(false);
+            const sizeKb = Math.max(1, Math.round(file.size / 1024));
+
+            if (!result.text || result.text.trim().length === 0) {
+              document.getElementById("pdfDropzoneTitle").textContent = `⚠️ ${file.name} (${sizeKb} KB • ${result.pages} page(s))`;
+              showToolError(
+                "No selectable text could be extracted from this PDF. It appears to be a scanned image-only PDF (which requires server-side OCR). You can paste text manually below."
+              );
+              return;
+            }
+
+            document.getElementById("pdfDropzoneTitle").textContent = `✅ ${file.name} (${sizeKb} KB • ${result.pages} page(s))`;
+            document.getElementById("pdfDropzoneMeta").textContent = `Extracted via ${result.engine}. Review the text below and click "Run Tool →" to summarize.`;
+            document.getElementById("toolPrimaryTextarea").value = result.text;
+            updateToolInputStats();
+            state.stats.files += 1;
+            saveState();
+            renderDashboard();
+            showToast(`Extracted text from ${file.name}!`);
+          } catch (err) {
+            setToolLoading(false);
+            showToolError(err.message || "Failed to extract text from the PDF file.");
+          }
+        });
+
+        document.getElementById("btnLocalToolAction").addEventListener("click", () => {
+          const tool = TOOLS_CATALOG.find((t) => t.id === toolsUiState.activeToolId) || TOOLS_CATALOG[0];
+          const inputVal = document.getElementById("toolPrimaryTextarea").value.trim();
+          const primaryOpt = document.getElementById("toolOptionPrimary").value;
+          const secondaryOpt = document.getElementById("toolOptionSecondary").value;
+          showToolError("");
+
+          if (!inputVal) {
+            showToolError(`Please enter or paste content in "${tool.textareaLabel}" first.`);
+            return;
+          }
+
+          try {
+            let output = "";
+            if (tool.id === "text-converter") output = runLocalTextConversion(inputVal, primaryOpt, secondaryOpt);
+            else if (tool.id === "math-helper") output = runLocalMathEvaluation(inputVal);
+            document.getElementById("toolResultOutput").textContent = output;
+            document.getElementById("toolResultMetaBadge").textContent = "Instant Local Engine";
+            toolsUiState.lastToolOutput = output;
+            state.stats.created += 1;
+            saveState();
+            renderDashboard();
+            showToast("Completed instant local calculation!");
+          } catch (err) {
+            showToolError(err.message || "Could not process input locally.");
+          }
+        });
+
+        document.getElementById("btnRunActiveTool").addEventListener("click", async () => {
+          if (toolsUiState.isRunning) return;
+          const tool = TOOLS_CATALOG.find((t) => t.id === toolsUiState.activeToolId) || TOOLS_CATALOG[0];
+          const inputVal = document.getElementById("toolPrimaryTextarea").value.trim();
+          const secondaryInputVal = document.getElementById("toolSecondaryInput").value.trim();
+          const primaryOpt = document.getElementById("toolOptionPrimary").value;
+          const secondaryOpt = document.getElementById("toolOptionSecondary").value;
+
+          showToolError("");
+          if (!inputVal) {
+            showToolError(
+              tool.id === "pdf-summarizer"
+                ? "Please upload a PDF file with extractable text or paste document text before summarizing."
+                : `Please enter content in "${tool.textareaLabel}" before running ${tool.title}.`
+            );
+            document.getElementById("toolPrimaryTextarea").focus();
+            return;
+          }
+
+          setToolLoading(true, `Running ${tool.title} with ${state.modelName || "Lumin-1.2"}...`);
+          try {
+            const res = await runToolAiBackendRequest(
+              tool,
+              primaryOpt,
+              secondaryOpt,
+              inputVal,
+              tool.hasSecondaryInput ? secondaryInputVal : ""
+            );
+            setToolLoading(false);
+            document.getElementById("toolResultOutput").textContent = res.output;
+            document.getElementById("toolResultMetaBadge").textContent = res.sourceLabel;
+            toolsUiState.lastToolOutput = res.output;
+            state.stats.created += 1;
+            saveState();
+            renderDashboard();
+          } catch (err) {
+            setToolLoading(false);
+            showToolError(err.message || "Tool execution failed. Check your backend connection.");
+          }
         });
 
         document.getElementById("hiddenFileInput").addEventListener("change", (e) => {
@@ -1157,7 +2570,10 @@
         document.getElementById("btnModalSend").addEventListener("click", sendFromModal);
         modalChatInput.addEventListener("keydown", (e) => { if (e.key === "Enter") sendFromModal(); });
 
-        const closeChatModal = () => document.getElementById("chatModalBackdrop").classList.remove("open");
+        const closeChatModal = () => {
+          document.getElementById("chatModalBackdrop").classList.remove("open");
+          setActiveSidebarNav("Home");
+        };
         document.getElementById("btnCloseChatModal").addEventListener("click", closeChatModal);
         document.getElementById("btnBackToHomeRail").addEventListener("click", closeChatModal);
         document.getElementById("chatModalBackdrop").addEventListener("click", (e) => { if (e.target.id === "chatModalBackdrop") closeChatModal(); });
@@ -1166,38 +2582,70 @@
         });
         window.addEventListener("keydown", (e) => {
           if (e.key === "Escape") {
-            closeChatModal();
+            closeAllWorkspaces();
+            setActiveSidebarNav("Home");
             document.getElementById("settingsModalBackdrop").classList.remove("open");
           }
         });
-
-        document.getElementById("btnCopyLastReply").addEventListener("click", () => {
-          if (!state.lastReply) return;
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(state.lastReply).catch(() => {});
-          }
-          showToast("Copied response to clipboard!");
-        });
+        document.getElementById("btnCopyLastReply").addEventListener("click", () => copyTextToClipboard(state.lastReply));
 
         document.getElementById("btnCloseSettingsModal").addEventListener("click", () => document.getElementById("settingsModalBackdrop").classList.remove("open"));
         document.getElementById("btnSettingsToggleTheme").addEventListener("click", toggleTheme);
         document.getElementById("btnResetDemoStats").addEventListener("click", () => {
           state.stats = { ...DEFAULT_STATS };
           state.sessions = JSON.parse(JSON.stringify(DEFAULT_SESSIONS));
+          state.createSessions = JSON.parse(JSON.stringify(DEFAULT_CREATE_SESSIONS));
+          state.researchSessions = JSON.parse(JSON.stringify(DEFAULT_RESEARCH_SESSIONS));
           state.activeSessionId = state.sessions[0].id;
+          state.activeCreateSessionId = state.createSessions[0].id;
+          state.activeResearchSessionId = state.researchSessions[0].id;
           saveState();
           renderDashboard();
-          showToast("Demo stats and chat history reset!");
+          renderModalHistoryRail();
+          renderActiveSessionMessages();
+          renderCreateWorkspace();
+          renderResearchWorkspace();
+          showToast("Demo stats and all workspace histories reset!");
         });
+
+        document.getElementById("btnTestBackend").addEventListener("click", async () => {
+          const rawUrl = document.getElementById("inputCustomEndpoint").value.trim() || "/api/chat";
+          const healthUrl = normalizeBackendHealthUrl(rawUrl);
+          const statusEl = document.getElementById("backendConnectionStatus");
+          statusEl.textContent = `Testing connection to ${healthUrl}...`;
+          statusEl.style.color = "var(--text-secondary)";
+          try {
+            const res = await fetch(healthUrl, { method: "GET" });
+            if (!res.ok) {
+              statusEl.textContent = `Backend returned HTTP ${res.status} at ${healthUrl}. Deploy the FastAPI backend on Vercel first; using public AI fallback for now.`;
+              statusEl.style.color = "#ff8a80";
+              return;
+            }
+            const info = await res.json();
+            if (info && info.openai_key_configured) {
+              statusEl.textContent = `✅ Connected to FastAPI Backend! OpenAI key is configured (Model: ${info.default_openai_model || "gpt-4o-mini"}).`;
+              statusEl.style.color = "var(--accent)";
+              showToast("FastAPI + OpenAI backend verified!");
+            } else {
+              statusEl.textContent = "⚠️ FastAPI server is reachable, but OPENAI_API_KEY is not set in Vercel Environment Variables yet.";
+              statusEl.style.color = "#ffd166";
+              showToast("Add OPENAI_API_KEY in Vercel Settings!");
+            }
+          } catch (err) {
+            statusEl.textContent = `Could not reach ${healthUrl} (check URL or CORS). Your existing public AI endpoint will continue working until deployed.`;
+            statusEl.style.color = "#ff8a80";
+          }
+        });
+
         document.getElementById("btnSaveSettings").addEventListener("click", () => {
           state.modelName = document.getElementById("inputModelName").value.trim() || "Lumin-1.2";
-          state.apiKey = document.getElementById("inputApiKey").value.trim();
-          state.customEndpoint = document.getElementById("inputCustomEndpoint").value.trim();
+          state.customEndpoint = normalizeBackendChatUrl(document.getElementById("inputCustomEndpoint").value);
+          ephemeralBackendToken = document.getElementById("inputSessionToken").value.trim();
           state.userName = document.getElementById("inputUserName").value.trim() || "Yafrah";
           saveState();
           renderDashboard();
           document.getElementById("settingsModalBackdrop").classList.remove("open");
-          showToast(`Settings saved! Active Model: ${state.modelName}`);
+          showToast(`Secure settings saved! Active Model: ${state.modelName}`);
         });
       });
     })();
